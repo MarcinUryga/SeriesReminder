@@ -5,7 +5,6 @@ import com.example.marci.seriesreminder.model.realm.SerieRealm
 import com.example.marci.seriesreminder.repositories.SeriesRepository
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -14,11 +13,11 @@ import javax.inject.Inject
 class GetSubscribedSeriesUseCase @Inject constructor(
     private val seriesRepository: SeriesRepository
 ) {
-  /*fun get(ids: List<Int>): Single<MutableList<SubscribedSerieViewModel>> {
+
+  fun get(ids: List<Int>): Single<MutableList<SubscribedSerieViewModel>> {
     return Single.fromCallable {
       seriesRepository.get(SerieRealm::class) {
-        val subscribedSeries = `in`("id", ids.toTypedArray()).findAll()
-        subscribedSeries.map {
+        `in`("id", ids.toTypedArray()).findAll().map {
           SubscribedSerieViewModel(
               id = it.id,
               title = it.name,
@@ -45,5 +44,5 @@ class GetSubscribedSeriesUseCase @Inject constructor(
         }.toMutableList()
       }
     }
-  }*/
+  }
 }

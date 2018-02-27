@@ -30,13 +30,13 @@ class OverviewSeriesPresenter @Inject constructor(
     super.resume()
     view.clearSeriesAdapter()
     seriesList.clear()
-    downloadNewNews()
+    downloadNewSeries()
 //    Timber.d(getSeriesOnTheAirUseCase)
   }
 
   override fun onScrolledItems(itemPosition: Int) {
     if (isScrolledAllSeries(itemPosition)) {
-      downloadNewNews(currentSeriesPage)
+      downloadNewSeries(currentSeriesPage)
     }
   }
 
@@ -46,7 +46,7 @@ class OverviewSeriesPresenter @Inject constructor(
         currentSeriesPage <= totalPages
   }
 
-  override fun downloadNewNews(page: Int) {
+  override fun downloadNewSeries(page: Int) {
     val disposable = getSeriesOnTheAirUseCase.getSeriesPage(page)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -104,13 +104,13 @@ class OverviewSeriesPresenter @Inject constructor(
   }
 
   private fun updateSerieDetails(serieId: Int) {
-    /*val disposable = getSerieDetailsUseCase.updateAndGet(serieId)
+    val disposable = getSerieDetailsUseCase.updateAndGet(serieId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { result ->
           view.showToast("Subscribed ${result.name}")
         }
-    disposables?.add(disposable)*/
+    disposables?.add(disposable)
   }
 
   override fun downloadSeries(page: Int) {

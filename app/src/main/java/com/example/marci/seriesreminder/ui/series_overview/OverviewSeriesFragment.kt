@@ -39,7 +39,6 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
     seriesRecyclerView.layoutManager = linearLayoutManager
     seriesRecyclerView.adapter = serieAdapter
     presenter.handleChosenSerie(serieAdapter.getClickedSerie())
-
     onScrollListener = object : RecyclerView.OnScrollListener() {
       override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)

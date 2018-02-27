@@ -26,7 +26,7 @@ open class RealmRepository(private val realmManager: RealmManager) {
     }
   }
 
-  fun <RO : RealmObject, R> get(realmClass: KClass<RO>, query: RealmQuery<RO>.() -> R): R {
+  fun <RO : RealmObject, R> get(realmClass: KClass<RO>, query: RealmQuery<RO>.() -> R): R? {
     val realm = realmManager.getInstance()
     try {
       return realm.where(realmClass.java).query()

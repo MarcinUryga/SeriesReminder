@@ -12,4 +12,5 @@
     <string name="vote_count">vote count: %d</string>
     <string name="episodes_in_this_season">Episodes in this season</string>
     <string name="next_episode">next episode: %s</string>
+    <string name="no_favorites_series">No subscriptions</string>
 </resources>

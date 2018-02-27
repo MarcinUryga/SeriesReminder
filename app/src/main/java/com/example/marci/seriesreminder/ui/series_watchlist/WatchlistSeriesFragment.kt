@@ -39,5 +39,14 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
   override fun showSeries(series: MutableList<SubscribedSerieViewModel>) {
     subscribedSeriesAdapter = SubscribedSeriesAdapter(series)
     seriesRecyclerView.adapter = subscribedSeriesAdapter
+    presenter.handleClickedSerie(subscribedSeriesAdapter.getSubscriptionPublishSubject())
+  }
+
+  override fun getAdapterItemCount() = subscribedSeriesAdapter.itemCount
+
+  override fun showNoSeriesView() {
+    seriesRecyclerView.visibility = View.INVISIBLE
+    noSeriesView.visibility = View.VISIBLE
+    noSeriesTextView.text = getString(R.string.no_favorites_series)
   }
 }

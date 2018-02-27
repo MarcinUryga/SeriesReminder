@@ -34,7 +34,7 @@ interface OverviewSeriesContract {
 
     fun downloadSeries(page: Int = 1)
 
-    fun downloadNewNews(page: Int = 1)
+    fun downloadNewSeries(page: Int = 1)
 
     fun onScrolledItems(itemPosition: Int)
 
