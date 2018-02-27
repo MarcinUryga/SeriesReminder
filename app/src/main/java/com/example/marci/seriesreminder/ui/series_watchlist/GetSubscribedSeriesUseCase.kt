@@ -14,7 +14,7 @@ import javax.inject.Inject
 class GetSubscribedSeriesUseCase @Inject constructor(
     private val seriesRepository: SeriesRepository
 ) {
-  fun get(ids: List<Int>): Single<MutableList<SubscribedSerieViewModel>> {
+  /*fun get(ids: List<Int>): Single<MutableList<SubscribedSerieViewModel>> {
     return Single.fromCallable {
       seriesRepository.get(SerieRealm::class) {
         val subscribedSeries = `in`("id", ids.toTypedArray()).findAll()
@@ -45,5 +45,5 @@ class GetSubscribedSeriesUseCase @Inject constructor(
         }.toMutableList()
       }
     }
-  }
+  }*/
 }

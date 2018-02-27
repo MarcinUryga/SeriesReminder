@@ -19,12 +19,12 @@ class WatchlistSeriesPresenter @Inject constructor(
 
   override fun onViewCreated() {
     super.onViewCreated()
-    val disposable = getSubscribedSeriesUseCase.get(subscribedSeriesStorage.getSubscribedSeriesIds())
+   /* val disposable = getSubscribedSeriesUseCase.get(subscribedSeriesStorage.getSubscribedSeriesIds())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { series ->
           view.showSeries(series)
         }
-    disposables?.addAll(disposable)
+    disposables?.addAll(disposable)*/
   }
 }

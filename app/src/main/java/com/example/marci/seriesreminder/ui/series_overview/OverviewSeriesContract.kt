@@ -34,12 +34,12 @@ interface OverviewSeriesContract {
 
     fun downloadSeries(page: Int = 1)
 
-    fun getFromRepoAsSingle(page: Int = 1)
+    fun downloadNewNews(page: Int = 1)
 
-    fun downloadNewSeries(itemPosition: Int)
+    fun onScrolledItems(itemPosition: Int)
 
     fun handleChosenSerie(clickedSerie: Observable<Int>)
 
-    fun handleSubscriptionSerie(clickedSubscription: Observable<Int>)
+    fun handleSubscriptionSerie(clickedSubscription: Observable<SerieViewModel>)
   }
 }

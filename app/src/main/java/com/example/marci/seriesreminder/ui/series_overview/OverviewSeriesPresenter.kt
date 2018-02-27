@@ -9,7 +9,6 @@ import com.example.marci.seriesreminder.ui.series_overview.viewmodel.SerieViewMo
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -25,35 +24,49 @@ class OverviewSeriesPresenter @Inject constructor(
   private val seriesList = mutableListOf<SerieViewModel>()
   private var currentSeriesPage = 1
   private var loading = false
+  private var totalPages = 0
 
   override fun resume() {
     super.resume()
     view.clearSeriesAdapter()
     seriesList.clear()
-    getFromRepoAsSingle()
-    Timber.d(getSeriesOnTheAirUseCase.getAmountOfSriesInfo().toString())
+    downloadNewNews()
+//    Timber.d(getSeriesOnTheAirUseCase)
   }
 
-  override fun downloadNewSeries(itemPosition: Int) {
+  override fun onScrolledItems(itemPosition: Int) {
     if (isScrolledAllSeries(itemPosition)) {
-      getFromRepoAsSingle(currentSeriesPage)
+      downloadNewNews(currentSeriesPage)
     }
   }
 
   private fun isScrolledAllSeries(itemPosition: Int): Boolean {
     return !loading &&
         view.getSeriesListSize() == (itemPosition + 1) &&
-        currentSeriesPage <= getSeriesOnTheAirUseCase.getAmountOfSriesInfo().totalPages!!
+        currentSeriesPage <= totalPages
   }
 
-  override fun getFromRepoAsSingle(page: Int) {
-    val disposable = getSeriesOnTheAirUseCase.getFromRepoAsSingle(page)
+  override fun downloadNewNews(page: Int) {
+    val disposable = getSeriesOnTheAirUseCase.getSeriesPage(page)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { doOnLoadingSeriesFromCurrentPage() }
         .doFinally { doAferLoadingCurrentPage() }
-        .subscribe { series ->
-          series.map { it.isSubscribed = subscribedSeriesStorage.getSerie(it.id.toString()) ?: false }
+        .subscribe { seriesPage ->
+          totalPages = seriesPage.totalPages.let { it!! }
+          val series = seriesPage.results?.map {
+            SerieViewModel(
+                id = it.id!!,
+                title = it.name!!,
+                originCountry = it.originCountry,
+                voteCount = it.voteCount!!,
+                originalLanguage = it.originalLanguage!!,
+                voteAverage = it.voteAverage!!,
+                overview = it.overview!!,
+                photoUrl = it.posterPath!!,
+                isSubscribed = subscribedSeriesStorage.getSerie(it.id.toString()) ?: false
+            )
+          }.let { it!! }
           seriesList.addAll(series)
           view.addSeries(series)
         }
@@ -78,22 +91,26 @@ class OverviewSeriesPresenter @Inject constructor(
     disposables?.add(disposable)
   }
 
-  override fun handleSubscriptionSerie(clickedSubscription: Observable<Int>) {
-    val disposable = clickedSubscription.subscribe { serieId ->
-      subscribedSeriesStorage.subscribeSerie(serieId.toString())
-      updateSerieDetails(serieId)
+  override fun handleSubscriptionSerie(clickedSubscription: Observable<SerieViewModel>) {
+    val disposable = clickedSubscription.subscribe { serie ->
+      if (!serie.isSubscribed) {
+        subscribedSeriesStorage.subscribeSerie(serie.id.toString())
+        updateSerieDetails(serie.id)
+      } else {
+        subscribedSeriesStorage.unsubscribeSerie(serie.id.toString())
+      }
     }
     disposables?.add(disposable)
   }
 
   private fun updateSerieDetails(serieId: Int) {
-    val disposable = getSerieDetailsUseCase.updateAndGet(serieId)
+    /*val disposable = getSerieDetailsUseCase.updateAndGet(serieId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { result ->
           view.showToast("Subscribed ${result.name}")
         }
-    disposables?.add(disposable)
+    disposables?.add(disposable)*/
   }
 
   override fun downloadSeries(page: Int) {

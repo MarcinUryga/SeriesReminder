@@ -13,7 +13,7 @@ class UpdateSerieDetailsUseCase @Inject constructor(
     private val networkConnection: NetworkConnection,
     private val seriesRepository: SeriesRepository
 ) {
-
+/*
   fun update(serieId: Int): Completable {
     return Single.fromCallable {
       seriesRepository.let {
@@ -22,5 +22,5 @@ class UpdateSerieDetailsUseCase @Inject constructor(
         }
       }
     }.toCompletable()
-  }
+  }*/
 }

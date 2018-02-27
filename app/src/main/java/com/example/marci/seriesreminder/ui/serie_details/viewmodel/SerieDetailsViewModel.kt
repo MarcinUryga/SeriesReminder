@@ -16,7 +16,6 @@ data class SerieDetailsViewModel(
     val voteAverage: Double = 0.0,
     val overview: String = "",
     val posterPath: String = "",
-    val serieFromPage: Int = 0,
     val seasonNumber: Int = 0,
     val episodes: List<Episode>? = null
 )

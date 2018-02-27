@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseActivity
-import com.example.marci.seriesreminder.network.HttpConstants
 import com.example.marci.seriesreminder.ui.serie_details.adapter.EpisodesAdapter
 import com.example.marci.seriesreminder.ui.serie_details.viewmodel.SerieDetailsViewModel
 import com.squareup.picasso.Picasso
@@ -32,7 +31,7 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
 
   override fun showSerieDetails(serieDetails: SerieDetailsViewModel) {
     toolbar.title = serieDetails.name
-    Picasso.with(this).load("${HttpConstants.TMDP_POSTER_PATH}${serieDetails.posterPath}").into(serieImage)
+    Picasso.with(this).load(serieDetails.posterPath).into(serieImage)
     originCountryTextView.text = getString(R.string.country, serieDetails.originCountry)
     seasonsTextView.text = getString(R.string.seasnons, serieDetails.seasonNumber)
     serieAverage.text = "${serieDetails.voteAverage}"

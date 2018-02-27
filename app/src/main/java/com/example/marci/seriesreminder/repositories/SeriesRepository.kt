@@ -1,10 +1,9 @@
 package com.example.marci.seriesreminder.repositories
 
 import com.example.marci.seriesreminder.model.pojo.seasons.Episode
-import com.example.marci.seriesreminder.model.pojo.series.Result
 import com.example.marci.seriesreminder.model.realm.EpisodeRealm
 import com.example.marci.seriesreminder.model.realm.SerieRealm
-import com.example.marci.seriesreminder.model.realm.SeriesPage
+import com.example.marci.seriesreminder.model.realm.SeriesPageRealm
 import com.example.marci.seriesreminder.network.HttpConstants
 import com.example.marci.seriesreminder.network.SerieDetailsAPI
 import com.example.marci.seriesreminder.network.SeriesOnTheAirAPI
@@ -13,7 +12,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.realm.RealmList
-import io.realm.RealmObject
 import javax.inject.Inject
 import com.example.marci.seriesreminder.model.pojo.details.Example as SerieDetails
 import com.example.marci.seriesreminder.model.pojo.seasons.Example as SeasonDetails
@@ -28,18 +26,13 @@ class SeriesRepository @Inject constructor(
     realmManager: RealmManager
 ) : RealmRepository(realmManager) {
 
-
-  fun saveAmountOfSeriesInfo(): Completable {
-    return getSeriesOnTheAirResult()
-        .doOnSuccess { amountOfSeriesInfo ->
-          copyOrUpdateAmountOfSeriesInfo(amountOfSeriesInfo)
+  fun saveSeriesPage(page: Int, updatedSeries: List<Int>): Completable {
+    return getSeriesOnTheAirResult(page).doOnSuccess { seriesPage ->
+      copySeriesFromPageToRealm(seriesPage.apply {
+        results?.filter { serie ->
+          updatedSeries.all { it != serie.id }
         }
-        .toCompletable()
-  }
-
-  fun saveSeriesFromCurrentPageExceptUpdated(page: Int, updatedSeries: List<Int>): Completable {
-    return getSeriesOnTheAirResult(page).doOnSuccess { series ->
-      copySeriesFromPageToRealm(series.results, page, updatedSeries)
+      })
     }.toCompletable()
   }
 
@@ -80,57 +73,49 @@ class SeriesRepository @Inject constructor(
     }
   }
 
-  private fun copyOrUpdateAmountOfSeriesInfo(amountOfSeriesInfo: SeriesOnTheAirResult) {
-    copyOrUpdate(transformAmountOfSeriesInfoToRealmObject(amountOfSeriesInfo))
-  }
-
-  private fun copySeriesFromPageToRealm(results: List<Result>?, page: Int, updatedSeries: List<Int>) {
+  private fun copySeriesFromPageToRealm(seriesPage: com.example.marci.seriesreminder.model.pojo.series.Example) {
     /*copyOrUpdateWithQuery(
         realmObjects = transformSeriesToRealmObjects(results, page),
         realmClass = SerieRealm::class,
         query = { `in`("id", results?.map { it.id }?.toTypedArray()).findAll().size },
         queryResult = 0
     )*/
-    copyOrUpdate(transformSeriesToRealmObjects(results, page, updatedSeries))
+    copyOrUpdate(transformSeriesToRealmObjects(seriesPage))
   }
 
-  private fun transformAmountOfSeriesInfoToRealmObject(amountOfSeriesInfo: SeriesOnTheAirResult): RealmObject {
-    return SeriesPage().apply {
-      totalPages = amountOfSeriesInfo.totalPages.let { it!! }
-      totalResults = amountOfSeriesInfo.totalResults.let { it!! }
-    }
-  }
-
-  private fun transformSeriesToRealmObjects(results: List<Result>?, page: Int, updatedSeries: List<Int>): List<SerieRealm>? {
-    return results?.filter { serie ->
-      updatedSeries.all { it != serie.id }
-    }?.map { serie ->
-      SerieRealm().apply {
-        id = serie.id.let { it!! }
-        name = serie.name.let { it!! }
-        originCountry = serie.originCountry?.toRealmList()
-        voteCount = serie.voteCount.let { it!! }
-        originalLanguage = serie.originalLanguage.let { it!! }
-        voteAverage = serie.voteAverage.let { it!! }
-        overview = serie.overview.let { it!! }
-        posterPath = serie.posterPath ?: HttpConstants.MOVIE_PLACEHOLDER
-        serieFromPage = page
-      }
+  private fun transformSeriesToRealmObjects(seriesPage: com.example.marci.seriesreminder.model.pojo.series.Example): SeriesPageRealm {
+    return SeriesPageRealm().apply {
+      page = seriesPage.page.let { it!! }
+      totalPages = seriesPage.totalPages.let { it!! }
+      totalResults = seriesPage.totalResults.let { it!! }
+      series = seriesPage.results?.map { serie ->
+        SerieRealm().apply {
+          id = serie.id.let { it!! }
+          name = serie.name.let { it!! }
+          originCountry = serie.originCountry?.toRealmList()
+          posterPath = serie.posterPath ?: HttpConstants.MOVIE_PLACEHOLDER
+          overview = serie.overview.let { it!! }
+          voteAverage = serie.voteAverage.let { it!! }
+          originalLanguage = serie.originalLanguage.let { it!! }
+          voteCount = serie.voteCount.let { it!! }
+        }
+      }?.toRealmList()
     }
   }
 
   private fun transformToSerieDetailsRealm(serieDetails: com.example.marci.seriesreminder.model.pojo.details.Example, seasonEpisodes: com.example.marci.seriesreminder.model.pojo.seasons.Example): SerieRealm {
     return SerieRealm().apply {
       id = serieDetails.id.let { it!! }
-      name = serieDetails.name.let { it!! }
+      voteCount = serieDetails.voteCount ?: 0
+      originalLanguage = serieDetails.originalLanguage ?: ""
+      voteAverage = serieDetails.voteAverage ?: 0.0
+      overview = serieDetails.overview ?: ""
+      posterPath = HttpConstants.TMDP_POSTER_PATH + serieDetails.posterPath
       originCountry = serieDetails.originCountry?.toRealmList()
-      voteCount = serieDetails.voteCount.let { it!! }
-      originalLanguage = serieDetails.originalLanguage.let { it!! }
-      voteAverage = serieDetails.voteAverage.let { it!! }
-      overview = serieDetails.overview.let { it!! }
-      posterPath = serieDetails.posterPath.let { it!! }
+      backdropPath = HttpConstants.TMDP_POSTER_PATH + serieDetails.backdropPath
+      name = serieDetails.name.let { it!! }
       episodes = transformEpisodesToRealm(seasonEpisodes.episodes.let { it!! })
-      seasonNumber = serieDetails.seasons?.let {
+      numberOfSeasons = serieDetails.seasons?.let {
         var lastSeason: Int = it.last().seasonNumber.let { it!! }
         if (++lastSeason != serieDetails.numberOfSeasons) {
           return@let it.last().seasonNumber.let { it!! }

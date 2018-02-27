@@ -43,7 +43,7 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
     onScrollListener = object : RecyclerView.OnScrollListener() {
       override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        presenter.downloadNewSeries(linearLayoutManager.findLastVisibleItemPosition())
+        presenter.onScrolledItems(linearLayoutManager.findLastVisibleItemPosition())
       }
     }
     seriesRecyclerView.addOnScrollListener(onScrollListener)

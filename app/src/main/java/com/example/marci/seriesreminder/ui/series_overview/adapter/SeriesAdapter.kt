@@ -15,7 +15,7 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
   private val series = mutableListOf<SerieViewModel?>()
   private val publishSubject = PublishSubject.create<Int>()
-  private val subscriptionPublishSubject = PublishSubject.create<Int>()
+  private val subscriptionPublishSubject = PublishSubject.create<SerieViewModel>()
 
   fun addSeries(series: List<SerieViewModel>) {
     this.series.addAll(series)
@@ -63,8 +63,9 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         }
         holder.itemView.actionSubscriptionButton.setOnClickListener {
           if (!series[position]?.isSubscribed.let { it!! }) {
-            subscriptionPublishSubject.onNext(series[position]?.id.let { it!! })
-            removeSerie(position)
+            subscriptionPublishSubject.onNext(series[position].let { it!! })
+//            removeSerie(position)
+            series[position]?.isSubscribed = !series[position]?.isSubscribed.let { it!! }
           }
           notifyItemChanged(position)
         }
@@ -85,7 +86,7 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
   fun getClickedSerie(): Observable<Int> = publishSubject
 
-  fun getClickedSubscription(): Observable<Int> = subscriptionPublishSubject
+  fun getClickedSubscription(): Observable<SerieViewModel> = subscriptionPublishSubject
 
   companion object {
     private val VIEW_SERIE = 0

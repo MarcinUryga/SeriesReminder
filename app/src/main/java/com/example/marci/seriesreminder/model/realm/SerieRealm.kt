@@ -18,7 +18,7 @@ open class SerieRealm : RealmObject() {
   open var voteAverage: Double = 0.0
   open var overview: String = ""
   open var posterPath: String = ""
-  open var serieFromPage: Int = 0
-  open var seasonNumber: Int = 0
+  open var backdropPath: String = ""
+  open var numberOfSeasons: Int = 0
   open var episodes: RealmList<EpisodeRealm>? = null
 }

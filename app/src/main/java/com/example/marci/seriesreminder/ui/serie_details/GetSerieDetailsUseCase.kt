@@ -29,7 +29,7 @@ class GetSerieDetailsUseCase @Inject constructor(
   private fun getSerieDetailsFromRealm(serieId: Int): Single<SerieDetailsViewModel> {
     return Single.fromCallable {
       seriesRepository.get(SerieRealm::class) {
-        val serie = `in`("id", arrayOf(serieId)).findFirst().let { it!! }
+        val serie = equalTo("id", serieId).findFirst().let { it!! }
         SerieDetailsViewModel(
             id = serie.id,
             name = serie.name,
@@ -38,9 +38,8 @@ class GetSerieDetailsUseCase @Inject constructor(
             originalLanguage = serie.originalLanguage,
             voteAverage = serie.voteAverage,
             overview = serie.overview,
-            posterPath = serie.posterPath,
-            serieFromPage = serie.serieFromPage,
-            seasonNumber = serie.seasonNumber,
+            posterPath = serie.backdropPath,
+            seasonNumber = serie.numberOfSeasons,
             episodes = serie.episodes?.map { episodeRealm ->
               Episode(
                   id = episodeRealm.id,
