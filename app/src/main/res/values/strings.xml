@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SeriesReminder</string>
+    <string name="fragment_overview_series">Overview</string>
+    <string name="fragment_watchlist_series">Watchlist</string>
+    <string name="series">Series</string>
+    <string name="overview">Overview</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="seasnons">Seasnons: %d</string>
+    <string name="country">country: %s</string>
+    <string name="vote_count">vote count: %d</string>
+    <string name="episodes_in_this_season">Episodes in this season</string>
+    <string name="next_episode">next episode: %s</string>
+</resources>
