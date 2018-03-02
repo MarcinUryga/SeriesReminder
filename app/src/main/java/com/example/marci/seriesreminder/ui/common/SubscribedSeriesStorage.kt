@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by marci on 2018-02-23.
  */
 class SubscribedSeriesStorage @Inject constructor(
-    private val preferencesManager: PreferencesManager
+    preferencesManager: PreferencesManager
 ) {
 
   private val storage = preferencesManager.createPreferences(SUBSCRIBED_SERIES)

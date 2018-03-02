@@ -32,6 +32,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     val mNotifyBuilder = NotificationCompat.Builder(
         context)
+        .setSmallIcon(R.drawable.ic_tv_black_24dp)
         .setContentTitle("Alarm Fired")
         .setContentText("Events to be Performed").setSound(alarmSound)
         .setAutoCancel(true).setWhen(`when`)

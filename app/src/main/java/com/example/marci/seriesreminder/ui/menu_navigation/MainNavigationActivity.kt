@@ -16,6 +16,7 @@ import com.example.marci.seriesreminder.broadcast.AlarmReceiver
 import com.example.marci.seriesreminder.mvp.BaseActivity
 import com.example.marci.seriesreminder.ui.series_overview.OverviewSeriesFragment
 import com.example.marci.seriesreminder.ui.series_watchlist.WatchlistSeriesFragment
+import com.example.marci.seriesreminder.ui.settings.SettingsFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main_navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -42,8 +43,8 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
 
   private fun setAlarmManager() {
     val calendar = Calendar.getInstance()
-    calendar.set(Calendar.HOUR_OF_DAY, 18)
-    calendar.set(Calendar.MINUTE, 25)
+    calendar.set(Calendar.HOUR_OF_DAY, 8)
+    calendar.set(Calendar.MINUTE, 51)
     calendar.set(Calendar.SECOND, 0)
     val intent1 = Intent(this, AlarmReceiver::class.java)
     val pendingIntent = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -76,6 +77,7 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
       when (menuItem.itemId) {
         R.id.nav_series_overview -> switchFragment(OverviewSeriesFragment())
         R.id.nav_series_watchlist -> switchFragment(WatchlistSeriesFragment())
+        R.id.nav_settings -> switchFragment(SettingsFragment())
         else -> throw Exception("Illegal fragment")
       }
       menuItem.isChecked = true

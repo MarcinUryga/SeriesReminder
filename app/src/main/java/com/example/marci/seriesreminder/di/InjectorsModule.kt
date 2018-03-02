@@ -8,6 +8,8 @@ import com.example.marci.seriesreminder.ui.series_overview.OverviewSeriesFragmen
 import com.example.marci.seriesreminder.ui.series_overview.OverviewSeriesModule
 import com.example.marci.seriesreminder.ui.series_watchlist.WatchlistSeriesFragment
 import com.example.marci.seriesreminder.ui.series_watchlist.WatchlistSeriesModule
+import com.example.marci.seriesreminder.ui.settings.SettingsFragment
+import com.example.marci.seriesreminder.ui.settings.SettingsModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -33,4 +35,8 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(WatchlistSeriesModule::class))
   abstract fun watchlistSeriesFragment(): WatchlistSeriesFragment
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(SettingsModule::class))
+  abstract fun settingsFragment(): SettingsFragment
 }

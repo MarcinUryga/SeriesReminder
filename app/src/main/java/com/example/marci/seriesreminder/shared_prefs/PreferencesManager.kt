@@ -16,5 +16,6 @@ class PreferencesManager(
   companion object {
     const val DEFAULT_PREFS_FILE: String = "default_prefs"
     const val SUBSCRIBED_SERIES = "subscribed_series_prefs"
+    const val SERIES_SETTINGS = "series_settings"
   }
 }

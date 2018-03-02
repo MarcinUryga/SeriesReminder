@@ -13,4 +13,8 @@
     <string name="episodes_in_this_season">Episodes in this season</string>
     <string name="next_episode">next episode: %s</string>
     <string name="no_favorites_series">No subscriptions</string>
+    <string name="settings">Settings</string>
+    <string name="others">Others</string>
+    <string name="set_time_for_daily_reminder">Set time for daily reminder</string>
+    <string name="daily_reminder_time">Daily reminder time:</string>
 </resources>
