@@ -21,7 +21,7 @@ class SubscribedSeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
       serieName.text = serie.title
       serieAverage.text = serie.voteAverage.toString()
       serieOverview.text = serie.overview
-      Picasso.with(context).load("${HttpConstants.TMDP_POSTER_PATH}${serie.photoUrl}").into(serieImage)
+      Picasso.with(context).load(serie.photoUrl).into(serieImage)
       voteCountTextView.text = context.getString(R.string.vote_count, serie.voteCount)
       originCountryTextView.text = context.getString(R.string.country, serie.originCountry.toString())
       if (serie.episodes.isNotEmpty()) {

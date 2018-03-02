@@ -29,7 +29,7 @@ class SeriesRepository @Inject constructor(
   fun saveSeriesPage(page: Int, updatedSeries: List<Int>): Completable {
     return getSeriesOnTheAirResult(page).doOnSuccess { seriesPage ->
       copySeriesFromPageToRealm(seriesPage.apply {
-        results?.filter { serie ->
+        results = results?.filter { serie ->
           updatedSeries.all { it != serie.id }
         }
       })

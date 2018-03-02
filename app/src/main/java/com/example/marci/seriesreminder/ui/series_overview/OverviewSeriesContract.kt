@@ -32,8 +32,6 @@ interface OverviewSeriesContract {
 
   interface Presenter : MvpPresenter {
 
-    fun downloadSeries(page: Int = 1)
-
     fun downloadNewSeries(page: Int = 1)
 
     fun onScrolledItems(itemPosition: Int)

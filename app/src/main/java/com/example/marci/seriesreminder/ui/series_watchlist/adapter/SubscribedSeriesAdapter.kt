@@ -14,6 +14,7 @@ class SubscribedSeriesAdapter(
 ) : RecyclerView.Adapter<SubscribedSeriesViewHolder>() {
 
   private val subscriptionPublishSubject = PublishSubject.create<Int>()
+  private val clickedSeriePublishSubject = PublishSubject.create<Int>()
 
   private fun removeSerie(position: Int) {
     subscribedSeries.remove(subscribedSeries[position])
@@ -24,12 +25,16 @@ class SubscribedSeriesAdapter(
 
   override fun onBindViewHolder(holder: SubscribedSeriesViewHolder, position: Int) {
     holder.bind(subscribedSeries[position])
+    holder.itemView.setOnClickListener {
+      clickedSeriePublishSubject.onNext(subscribedSeries[position].id)
+    }
     holder.itemView.unsubscribeButton.setOnClickListener {
       subscriptionPublishSubject.onNext(subscribedSeries[position].id)
       removeSerie(position)
     }
-//    notifyDataSetChanged()
   }
+
+  fun getClickedSeriePublishSubject() = clickedSeriePublishSubject
 
   fun getSubscriptionPublishSubject() = subscriptionPublishSubject
 

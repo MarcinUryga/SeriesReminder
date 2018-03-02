@@ -3,6 +3,7 @@ package com.example.marci.seriesreminder.ui.series_watchlist
 import com.example.marci.seriesreminder.di.ScreenScope
 import com.example.marci.seriesreminder.mvp.BasePresenter
 import com.example.marci.seriesreminder.ui.common.SubscribedSeriesStorage
+import com.example.marci.seriesreminder.ui.serie_details.SerieIdParams
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -26,16 +27,24 @@ class WatchlistSeriesPresenter @Inject constructor(
         .subscribe { series ->
           if (series.isEmpty()) {
             view.showNoSeriesView()
+          } else {
+            view.showSeries(series as MutableList<SubscribedSerieViewModel>)
           }
-          view.showSeries(series)
         }
     disposables?.addAll(disposable)
   }
 
-  override fun handleClickedSerie(subscriptionPublishSubject: PublishSubject<Int>) {
+  override fun handleClickedSerie(clickedSeriePublishSubject: PublishSubject<Int>) {
+    val disposable = clickedSeriePublishSubject.subscribe { serieId ->
+      view.starSerieDetailsActivity(SerieIdParams(serieId))
+    }
+    disposables?.add(disposable)
+  }
+
+  override fun handleClickedSerieUnsubscribe(subscriptionPublishSubject: PublishSubject<Int>) {
     val disposable = subscriptionPublishSubject.subscribe { serieId ->
       subscribedSeriesStorage.unsubscribeSerie(serieId.toString())
-      if (view.getAdapterItemCount() == 0) {
+      if (subscribedSeriesStorage.getSubscribedSeriesIds().isEmpty()) {
         view.showNoSeriesView()
       }
     }

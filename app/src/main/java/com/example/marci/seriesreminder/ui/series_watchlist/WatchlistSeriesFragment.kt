@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseFragment
+import com.example.marci.seriesreminder.ui.serie_details.SerieDetailsActivity
+import com.example.marci.seriesreminder.ui.serie_details.SerieIdParams
 import com.example.marci.seriesreminder.ui.series_watchlist.adapter.SubscribedSeriesAdapter
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -39,7 +41,12 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
   override fun showSeries(series: MutableList<SubscribedSerieViewModel>) {
     subscribedSeriesAdapter = SubscribedSeriesAdapter(series)
     seriesRecyclerView.adapter = subscribedSeriesAdapter
-    presenter.handleClickedSerie(subscribedSeriesAdapter.getSubscriptionPublishSubject())
+    presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
+    presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
+  }
+
+  override fun starSerieDetailsActivity(serieIdParams: SerieIdParams) {
+    startActivity(SerieDetailsActivity.newIntent(context, serieIdParams))
   }
 
   override fun getAdapterItemCount() = subscribedSeriesAdapter.itemCount

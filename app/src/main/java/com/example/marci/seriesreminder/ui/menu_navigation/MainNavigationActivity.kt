@@ -1,5 +1,7 @@
 package com.example.marci.seriesreminder.ui.menu_navigation
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -10,12 +12,15 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
 import com.example.marci.seriesreminder.R
+import com.example.marci.seriesreminder.broadcast.AlarmReceiver
 import com.example.marci.seriesreminder.mvp.BaseActivity
 import com.example.marci.seriesreminder.ui.series_overview.OverviewSeriesFragment
 import com.example.marci.seriesreminder.ui.series_watchlist.WatchlistSeriesFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main_navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.util.*
+
 
 class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(), MainNavigationContract.View {
 
@@ -32,6 +37,18 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     setupNavigationDrawer()
     switchFragment(OverviewSeriesFragment())
     headerView = navigationView.getHeaderView(0)
+    setAlarmManager()
+  }
+
+  private fun setAlarmManager() {
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.HOUR_OF_DAY, 18)
+    calendar.set(Calendar.MINUTE, 25)
+    calendar.set(Calendar.SECOND, 0)
+    val intent1 = Intent(this, AlarmReceiver::class.java)
+    val pendingIntent = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT)
+    val am = this.getSystemService(ALARM_SERVICE) as AlarmManager
+    am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent)
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {

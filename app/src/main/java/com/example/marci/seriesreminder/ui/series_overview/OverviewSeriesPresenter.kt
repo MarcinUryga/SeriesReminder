@@ -21,17 +21,15 @@ class OverviewSeriesPresenter @Inject constructor(
     private val getSerieDetailsUseCase: GetSerieDetailsUseCase
 ) : BasePresenter<OverviewSeriesContract.View>(), OverviewSeriesContract.Presenter {
 
-  private val seriesList = mutableListOf<SerieViewModel>()
   private var currentSeriesPage = 1
   private var loading = false
   private var totalPages = 0
 
   override fun resume() {
     super.resume()
+    currentSeriesPage = 1
     view.clearSeriesAdapter()
-    seriesList.clear()
     downloadNewSeries()
-//    Timber.d(getSeriesOnTheAirUseCase)
   }
 
   override fun onScrolledItems(itemPosition: Int) {
@@ -53,22 +51,22 @@ class OverviewSeriesPresenter @Inject constructor(
         .doOnSubscribe { doOnLoadingSeriesFromCurrentPage() }
         .doFinally { doAferLoadingCurrentPage() }
         .subscribe { seriesPage ->
-          totalPages = seriesPage.totalPages.let { it!! }
-          val series = seriesPage.results?.map {
-            SerieViewModel(
-                id = it.id!!,
-                title = it.name!!,
-                originCountry = it.originCountry,
-                voteCount = it.voteCount!!,
-                originalLanguage = it.originalLanguage!!,
-                voteAverage = it.voteAverage!!,
-                overview = it.overview!!,
-                photoUrl = it.posterPath!!,
-                isSubscribed = subscribedSeriesStorage.getSerie(it.id.toString()) ?: false
-            )
-          }.let { it!! }
-          seriesList.addAll(series)
-          view.addSeries(series)
+          if (seriesPage.page != null) {
+            totalPages = seriesPage.totalPages.let { it!! }
+            view.addSeries(seriesPage.results?.map {
+              SerieViewModel(
+                  id = it.id!!,
+                  title = it.name!!,
+                  originCountry = it.originCountry,
+                  voteCount = it.voteCount!!,
+                  originalLanguage = it.originalLanguage!!,
+                  voteAverage = it.voteAverage!!,
+                  overview = it.overview!!,
+                  photoUrl = it.posterPath!!,
+                  isSubscribed = subscribedSeriesStorage.getSerie(it.id.toString()) ?: false
+              )
+            }.let { it!! })
+          }
         }
     disposables?.add(disposable)
   }
@@ -111,37 +109,5 @@ class OverviewSeriesPresenter @Inject constructor(
           view.showToast("Subscribed ${result.name}")
         }
     disposables?.add(disposable)
-  }
-
-  override fun downloadSeries(page: Int) {
-    /*val disposable = getSeriesOnTheAirUseCase.getSerieWithDetails(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe {
-          if (isStartingLoadingSeries()) {
-            view.addProgressBar()
-          }
-        }
-        .doOnComplete {
-          if (currentSeriesPage++ <= 13) {
-            downloadSeries(currentSeriesPage)
-          }
-        }
-        .doOnNext { view.removeProgressBar() }
-        .subscribe { serie ->
-          view.addSerie(serie)
-          seriesList.add(serie)
-          if (isStillLoadingSeriesFromPage())
-            view.addProgressBar()
-        }
-    disposables?.add(disposable)*/
-  }
-
-  private fun isStartingLoadingSeries() = seriesList.size == 0
-
-  private fun isStillLoadingSeriesFromPage() = seriesList.size != MAX_AMOUNT_OF_SERIES_ON_PAGE
-
-  companion object {
-    const val MAX_AMOUNT_OF_SERIES_ON_PAGE = 20
   }
 }
