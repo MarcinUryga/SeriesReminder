@@ -2,8 +2,9 @@ package com.example.marcin.meetfriends.ui.menu_navigation
 
 import com.example.marci.seriesreminder.di.ScreenScope
 import com.example.marci.seriesreminder.mvp.BasePresenter
+import com.example.marci.seriesreminder.ui.common.SettingsStorage
 import com.example.marci.seriesreminder.ui.menu_navigation.MainNavigationContract
-import com.example.marci.seriesreminder.utils.NetworkConnection
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -11,7 +12,6 @@ import javax.inject.Inject
  */
 @ScreenScope
 class MainNavigationPresenter @Inject constructor(
-    private val networkConnection: NetworkConnection
 ) : BasePresenter<MainNavigationContract.View>(), MainNavigationContract.Presenter {
 
 }

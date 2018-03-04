@@ -1,4 +1,4 @@
-package com.example.marci.seriesreminder.ui.series_watchlist
+package com.example.marci.seriesreminder.ui.common
 
 import com.example.marci.seriesreminder.model.pojo.seasons.Episode
 import com.example.marci.seriesreminder.model.realm.SerieRealm
@@ -42,7 +42,7 @@ class GetSubscribedSeriesUseCase @Inject constructor(
                   )
                 }?.toList().let { it!! }
             )
-          }.toMutableList()
+          }.toMutableList().sortedByDescending { it.episodes.first().airDate }
         } else {
           return@get emptyList<SubscribedSerieViewModel>()
         }

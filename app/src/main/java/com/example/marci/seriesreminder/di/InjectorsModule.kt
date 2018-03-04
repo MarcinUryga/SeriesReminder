@@ -1,5 +1,7 @@
 package com.example.marci.seriesreminder.di
 
+import com.example.marci.seriesreminder.receiver.SeriesAlarmModule
+import com.example.marci.seriesreminder.receiver.SeriesAlarmReceiver
 import com.example.marci.seriesreminder.ui.menu_navigation.MainNavigationActivity
 import com.example.marci.seriesreminder.ui.menu_navigation.MainNavigationModule
 import com.example.marci.seriesreminder.ui.serie_details.SerieDetailsActivity
@@ -39,4 +41,7 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(SettingsModule::class))
   abstract fun settingsFragment(): SettingsFragment
+
+  @ContributesAndroidInjector(modules = arrayOf(SeriesAlarmModule::class))
+  abstract fun seriesAlarmReceiver(): SeriesAlarmReceiver
 }

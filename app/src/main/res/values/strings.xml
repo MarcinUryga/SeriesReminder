@@ -17,4 +17,6 @@
     <string name="others">Others</string>
     <string name="set_time_for_daily_reminder">Set time for daily reminder</string>
     <string name="daily_reminder_time">Daily reminder time:</string>
+    <string name="series_reminders">Series Reminders</string>
+    <string name="daily_reminds">Daily reminds</string>
 </resources>

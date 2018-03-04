@@ -11,10 +11,18 @@ interface SettingsContract {
   interface View : MvpView {
 
     fun showRemindTime(reminderTime: String)
+
+    fun setDailyRemindsSwitch(state: Boolean)
+
+    fun setUpAlarmManager(millis: Long)
+
+    fun stopAlarmManager()
   }
 
   interface Presenter : MvpPresenter {
 
     fun setReminderTime(selectedTime: String)
+
+    fun handleDailyRemindsSwitch(state: Boolean)
   }
 }

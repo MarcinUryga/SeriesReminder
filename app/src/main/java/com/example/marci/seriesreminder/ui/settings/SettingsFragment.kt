@@ -1,15 +1,20 @@
 package com.example.marci.seriesreminder.ui.settings
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseFragment
+import com.example.marci.seriesreminder.receiver.SeriesAlarmReceiver
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_settings.*
+
 
 /**
  * Created by marci on 2018-03-02.
@@ -30,11 +35,31 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     remindTimeTextView.text = getString(R.string.daily_reminder_time)
+    setUpDailyRemindsSwitch()
     setUpTimeChooserButton()
   }
 
+  override fun setUpAlarmManager(millis: Long) {
+    val pendingIntent = PendingIntent.getBroadcast(context, 0, SeriesAlarmReceiver.newIntent(context), PendingIntent.FLAG_UPDATE_CURRENT)
+    (context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager)
+        .setInexactRepeating(AlarmManager.RTC_WAKEUP, millis, AlarmManager.INTERVAL_DAY, pendingIntent)
+  }
+
+  override fun stopAlarmManager() {
+    val pendingIntent = PendingIntent.getBroadcast(context, 0, SeriesAlarmReceiver.newIntent(context), PendingIntent.FLAG_UPDATE_CURRENT)
+    (context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager)
+        .cancel(pendingIntent)
+  }
+
+  private fun setUpDailyRemindsSwitch() {
+    dailyReminderSwitchLayout.setOnClickListener {
+      dailyRemindsSwitch.isChecked = !dailyRemindsSwitch.isChecked
+      presenter.handleDailyRemindsSwitch(dailyRemindsSwitch.isChecked)
+    }
+  }
+
   private fun setUpTimeChooserButton() {
-    timeTextView.setOnClickListener {
+    dailyReminderLayout.setOnClickListener {
       TimePickerDialog(
           context,
           TimePickerDialog.OnTimeSetListener { _, hour, minute ->
@@ -46,6 +71,10 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
           true
       ).show()
     }
+  }
+
+  override fun setDailyRemindsSwitch(state: Boolean) {
+    dailyRemindsSwitch.isChecked = state
   }
 
   override fun showRemindTime(reminderTime: String) {

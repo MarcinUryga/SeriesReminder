@@ -2,6 +2,7 @@ package com.example.marci.seriesreminder.ui.series_watchlist
 
 import com.example.marci.seriesreminder.di.ScreenScope
 import com.example.marci.seriesreminder.mvp.BasePresenter
+import com.example.marci.seriesreminder.ui.common.GetSubscribedSeriesUseCase
 import com.example.marci.seriesreminder.ui.common.SubscribedSeriesStorage
 import com.example.marci.seriesreminder.ui.serie_details.SerieIdParams
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel

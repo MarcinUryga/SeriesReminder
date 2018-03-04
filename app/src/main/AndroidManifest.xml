@@ -23,7 +23,13 @@
         </activity>
         <activity android:name=".ui.serie_details.SerieDetailsActivity" />
 
-        <receiver android:name=".broadcast.AlarmReceiver" />
+        <receiver
+            android:name=".receiver.SeriesAlarmReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
