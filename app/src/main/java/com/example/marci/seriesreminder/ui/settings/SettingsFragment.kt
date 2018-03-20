@@ -3,7 +3,9 @@ package com.example.marci.seriesreminder.ui.settings
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.ComponentName
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -40,12 +42,20 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
   }
 
   override fun setUpAlarmManager(millis: Long) {
+    val receiver = ComponentName(context, SeriesAlarmReceiver::class.java)
+    val packageManager = context.packageManager
+    packageManager.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
     val pendingIntent = PendingIntent.getBroadcast(context, 0, SeriesAlarmReceiver.newIntent(context), PendingIntent.FLAG_UPDATE_CURRENT)
     (context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager)
         .setInexactRepeating(AlarmManager.RTC_WAKEUP, millis, AlarmManager.INTERVAL_DAY, pendingIntent)
   }
 
   override fun stopAlarmManager() {
+    val receiver = ComponentName(context, SeriesAlarmReceiver::class.java)
+    val packageManager = context.packageManager
+    packageManager.setComponentEnabledSetting(receiver,
+        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+        PackageManager.DONT_KILL_APP)
     val pendingIntent = PendingIntent.getBroadcast(context, 0, SeriesAlarmReceiver.newIntent(context), PendingIntent.FLAG_UPDATE_CURRENT)
     (context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager)
         .cancel(pendingIntent)

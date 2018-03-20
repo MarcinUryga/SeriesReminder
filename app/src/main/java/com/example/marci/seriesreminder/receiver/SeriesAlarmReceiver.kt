@@ -32,20 +32,16 @@ class SeriesAlarmReceiver : BroadcastReceiver(), SeriesAlarmContract.Receiver {
 
   override fun createNotification(it: SubscribedSerieViewModel) {
     val notificationIntent = SerieDetailsActivity.newIntent(context, SerieIdParams(it.id))
-    notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-
+    notificationIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     val stackBuilder = TaskStackBuilder.create(context)
     stackBuilder.addParentStack(MainNavigationActivity::class.java)
     stackBuilder.addNextIntent(notificationIntent)
-
-    val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-
+    val pendingIntent = stackBuilder.getPendingIntent(it.id, PendingIntent.FLAG_UPDATE_CURRENT)
     val mNotifyBuilder = NotificationCompat.Builder(context, "seriesReminder")
         .setSmallIcon(R.drawable.ic_tv_black_24dp)
         .setContentTitle(it.title)
         .setContentText(context.getString(R.string.next_episode, it.getNextEpisodeDate()))
         .setContentIntent(pendingIntent)
-
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     notificationManager.notify(it.id, mNotifyBuilder.build())
   }

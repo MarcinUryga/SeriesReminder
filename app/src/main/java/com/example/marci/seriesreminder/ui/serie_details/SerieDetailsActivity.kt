@@ -31,7 +31,9 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
 
   override fun showSerieDetails(serieDetails: SerieDetailsViewModel) {
     toolbar.title = serieDetails.name
-    Picasso.with(this).load(serieDetails.posterPath).into(serieImage)
+    if (serieDetails.posterPath != "") {
+      Picasso.with(this).load(serieDetails.posterPath).into(serieImage)
+    }
     originCountryTextView.text = getString(R.string.country, serieDetails.originCountry)
     seasonsTextView.text = getString(R.string.seasnons, serieDetails.seasonNumber)
     serieAverage.text = "${serieDetails.voteAverage}"
