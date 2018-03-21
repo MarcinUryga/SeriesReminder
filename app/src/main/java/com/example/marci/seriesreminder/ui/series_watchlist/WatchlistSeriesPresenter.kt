@@ -45,6 +45,7 @@ class WatchlistSeriesPresenter @Inject constructor(
   override fun handleClickedSerieUnsubscribe(subscriptionPublishSubject: PublishSubject<Int>) {
     val disposable = subscriptionPublishSubject.subscribe { serieId ->
       subscribedSeriesStorage.unsubscribeSerie(serieId.toString())
+      view.removeFromRecyclerView(serieId)
       if (subscribedSeriesStorage.getSubscribedSeriesIds().isEmpty()) {
         view.showNoSeriesView()
       }

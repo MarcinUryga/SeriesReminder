@@ -9,16 +9,29 @@ import kotlinx.android.synthetic.main.item_subscribed_serie.view.*
 /**
  * Created by marci on 2018-02-23.
  */
-class SubscribedSeriesAdapter(
-    private val subscribedSeries: MutableList<SubscribedSerieViewModel>
-) : RecyclerView.Adapter<SubscribedSeriesViewHolder>() {
+class SubscribedSeriesAdapter : RecyclerView.Adapter<SubscribedSeriesViewHolder>() {
 
+  private val subscribedSeries = mutableListOf<SubscribedSerieViewModel>()
   private val subscriptionPublishSubject = PublishSubject.create<Int>()
   private val clickedSeriePublishSubject = PublishSubject.create<Int>()
 
-  private fun removeSerie(position: Int) {
-    subscribedSeries.remove(subscribedSeries[position])
+  fun createSubscribeSeriesList(subscribedSeries: MutableList<SubscribedSerieViewModel>) {
+    this.subscribedSeries.addAll(subscribedSeries)
     notifyDataSetChanged()
+  }
+
+  fun removeSerie(id: Int) {
+    val iterator = subscribedSeries.iterator()
+    var index = 0
+    while (iterator.hasNext()) {
+      val current = iterator.next()
+      if (current.id == id) {
+        iterator.remove()
+        notifyItemRemoved(index)
+        notifyItemRangeChanged(index, itemCount)
+      }
+      index++
+    }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SubscribedSeriesViewHolder.create(parent)
@@ -30,11 +43,10 @@ class SubscribedSeriesAdapter(
     }
     holder.itemView.unsubscribeButton.setOnClickListener {
       subscriptionPublishSubject.onNext(subscribedSeries[position].id)
-      removeSerie(position)
     }
   }
 
-  fun getClickedSeriePublishSubject() = clickedSeriePublishSubject
+  fun getClickedSeriePublishSubject(): PublishSubject<Int> = clickedSeriePublishSubject
 
   fun getSubscriptionPublishSubject() = subscriptionPublishSubject
 

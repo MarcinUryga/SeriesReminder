@@ -20,6 +20,8 @@ interface WatchlistSeriesContract {
     fun getAdapterItemCount(): Int
 
     fun starSerieDetailsActivity(serieIdParams: SerieIdParams)
+
+    fun removeFromRecyclerView(serieId: Int)
   }
 
   interface Presenter : MvpPresenter {

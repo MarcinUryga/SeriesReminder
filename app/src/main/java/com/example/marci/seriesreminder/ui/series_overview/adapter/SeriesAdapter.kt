@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.item_serie.view.*
  * Created by marci on 2018-02-16.
  */
 class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
-
   private val series = mutableListOf<SerieViewModel?>()
   private val publishSubject = PublishSubject.create<Int>()
   private val subscriptionPublishSubject = PublishSubject.create<SerieViewModel>()
@@ -62,11 +61,11 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
           publishSubject.onNext(series[position]?.id.let { it!! })
         }
         holder.itemView.actionSubscriptionButton.setOnClickListener {
-          if (!series[position]?.isSubscribed.let { it!! }) {
-            subscriptionPublishSubject.onNext(series[position].let { it!! })
+          //          if (!series[position]?.isSubscribed.let { it!! }) {
+          subscriptionPublishSubject.onNext(series[position].let { it!! })
 //            removeSerie(position)
-            series[position]?.isSubscribed = !series[position]?.isSubscribed.let { it!! }
-          }
+          series[position]?.isSubscribed = !series[position]?.isSubscribed.let { it!! }
+//          }
           notifyItemChanged(position)
         }
       }

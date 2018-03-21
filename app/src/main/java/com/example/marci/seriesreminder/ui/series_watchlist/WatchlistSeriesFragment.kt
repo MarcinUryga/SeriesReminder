@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_series_list.*
  */
 class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(), WatchlistSeriesContract.View {
 
-  private lateinit var subscribedSeriesAdapter: SubscribedSeriesAdapter
+  private val subscribedSeriesAdapter = SubscribedSeriesAdapter()
 
   @SuppressLint("CheckResult")
   override fun onAttach(context: Context?) {
@@ -36,17 +36,23 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     seriesRecyclerView.layoutManager = LinearLayoutManager(context)
+    seriesRecyclerView.adapter = subscribedSeriesAdapter
   }
 
   override fun showSeries(series: MutableList<SubscribedSerieViewModel>) {
-    subscribedSeriesAdapter = SubscribedSeriesAdapter(series)
-    seriesRecyclerView.adapter = subscribedSeriesAdapter
+    subscribedSeriesAdapter.createSubscribeSeriesList(series)
     presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
     presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
   }
 
+  override fun removeFromRecyclerView(serieId: Int) {
+    subscribedSeriesAdapter.removeSerie(serieId)
+  }
+
   override fun starSerieDetailsActivity(serieIdParams: SerieIdParams) {
     startActivity(SerieDetailsActivity.newIntent(context, serieIdParams))
+    presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
+    presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
   }
 
   override fun getAdapterItemCount() = subscribedSeriesAdapter.itemCount
