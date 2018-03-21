@@ -93,6 +93,7 @@ class OverviewSeriesPresenter @Inject constructor(
     val disposable = clickedSubscription.subscribe { serie ->
       if (!serie.isSubscribed) {
         subscribedSeriesStorage.subscribeSerie(serie.id.toString())
+        view.removeSerieFromRecyclerView(serie.id)
         updateSerieDetails(serie.id)
       } else {
         subscribedSeriesStorage.unsubscribeSerie(serie.id.toString())

@@ -77,6 +77,10 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
     return serieAdapter.itemCount
   }
 
+  override fun removeSerieFromRecyclerView(serieId: Int) {
+    serieAdapter.removeSerie(serieId)
+  }
+
   override fun showSeries(series: List<SerieViewModel>) {
     /* serieAdapter = SeriesAdapter(series)
      seriesRecyclerView.adapter = serieAdapter*/

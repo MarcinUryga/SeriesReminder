@@ -28,6 +28,8 @@ interface OverviewSeriesContract {
     fun startSerieDetailsActivity(serieIdParams: SerieIdParams)
 
     fun getSeriesListSize(): Int
+
+    fun removeSerieFromRecyclerView(serieId: Int)
   }
 
   interface Presenter : MvpPresenter {

@@ -61,20 +61,24 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
           publishSubject.onNext(series[position]?.id.let { it!! })
         }
         holder.itemView.actionSubscriptionButton.setOnClickListener {
-          //          if (!series[position]?.isSubscribed.let { it!! }) {
           subscriptionPublishSubject.onNext(series[position].let { it!! })
-//            removeSerie(position)
-          series[position]?.isSubscribed = !series[position]?.isSubscribed.let { it!! }
-//          }
-          notifyItemChanged(position)
         }
       }
     }
   }
 
-  private fun removeSerie(position: Int) {
-    series.removeAt(position)
-    notifyItemRemoved(position)
+  fun removeSerie(serieId: Int) {
+    val iterator = series.iterator()
+    var index = 0
+    while (iterator.hasNext()) {
+      val current = iterator.next()
+      if (current?.id == serieId) {
+        iterator.remove()
+        notifyItemRemoved(index)
+        notifyItemRangeChanged(index, itemCount)
+      }
+      index++
+    }
   }
 
   override fun getItemViewType(position: Int): Int {
