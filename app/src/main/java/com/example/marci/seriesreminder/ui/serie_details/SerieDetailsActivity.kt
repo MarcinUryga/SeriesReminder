@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseActivity
+import com.example.marci.seriesreminder.ui.menu_navigation.MainNavigationActivity
 import com.example.marci.seriesreminder.ui.serie_details.adapter.EpisodesAdapter
 import com.example.marci.seriesreminder.ui.serie_details.viewmodel.SerieDetailsViewModel
 import com.squareup.picasso.Picasso
@@ -30,9 +31,14 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
   }
 
   override fun showSerieDetails(serieDetails: SerieDetailsViewModel) {
+    toolbar.setNavigationIcon(R.drawable.ic_back)
     toolbar.title = serieDetails.name
     if (serieDetails.posterPath != "") {
       Picasso.with(this).load(serieDetails.posterPath).into(serieImage)
+    }
+    setSupportActionBar(toolbar)
+    toolbar.setNavigationOnClickListener {
+      presenter.handleOnBackIconClicked()
     }
     originCountryTextView.text = getString(R.string.country, serieDetails.originCountry)
     seasonsTextView.text = getString(R.string.seasnons, serieDetails.seasonNumber)
@@ -47,6 +53,10 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
 
   override fun updateActionButton(floatingActionButtonState: FloatingActionButtonState) {
     actionSerieButton.setImageDrawable(ContextCompat.getDrawable(this, floatingActionButtonState.drawableId))
+  }
+
+  override fun startMainActivity() {
+    startActivity(MainNavigationActivity.newIntent(baseContext))
   }
 
   companion object {

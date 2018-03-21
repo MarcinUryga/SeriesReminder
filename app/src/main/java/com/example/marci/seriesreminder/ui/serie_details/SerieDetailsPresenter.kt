@@ -46,4 +46,8 @@ class SerieDetailsPresenter @Inject constructor(
     }
     updateActionButtonState(id)
   }
+
+  override fun handleOnBackIconClicked() {
+    view.startMainActivity()
+  }
 }

@@ -14,10 +14,14 @@ interface SerieDetailsContract {
     fun showSerieDetails(serieDetails: SerieDetailsViewModel)
 
     fun updateActionButton(floatingActionButtonState: FloatingActionButtonState)
+
+    fun startMainActivity()
   }
 
   interface Presenter : MvpPresenter {
 
     fun onActionButtonClicked(id: Int)
+
+    fun handleOnBackIconClicked()
   }
 }

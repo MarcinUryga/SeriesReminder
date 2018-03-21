@@ -42,6 +42,7 @@ class SeriesAlarmReceiver : BroadcastReceiver(), SeriesAlarmContract.Receiver {
         .setContentTitle(it.title)
         .setContentText(context.getString(R.string.next_episode, it.getNextEpisodeDate()))
         .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     notificationManager.notify(it.id, mNotifyBuilder.build())
   }
