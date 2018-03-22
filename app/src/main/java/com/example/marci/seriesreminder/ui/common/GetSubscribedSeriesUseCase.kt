@@ -40,9 +40,9 @@ class GetSubscribedSeriesUseCase @Inject constructor(
                       voteAverage = episodeRealm.voteAverage,
                       voteCount = episodeRealm.voteCount
                   )
-                }?.toList().let { it!! }
+                }?.toList() ?: emptyList()
             )
-          }.toMutableList().sortedByDescending { it.episodes.first().airDate }
+          }.toMutableList()
         } else {
           return@get emptyList<SubscribedSerieViewModel>()
         }

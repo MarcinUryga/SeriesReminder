@@ -3,6 +3,7 @@ package com.example.marci.seriesreminder.ui.series_watchlist.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel
+import com.example.marci.seriesreminder.utils.stringToJodaTime
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_subscribed_serie.view.*
 
@@ -17,6 +18,7 @@ class SubscribedSeriesAdapter : RecyclerView.Adapter<SubscribedSeriesViewHolder>
 
   fun createSubscribeSeriesList(subscribedSeries: MutableList<SubscribedSerieViewModel>) {
     this.subscribedSeries.addAll(subscribedSeries)
+
     notifyDataSetChanged()
   }
 

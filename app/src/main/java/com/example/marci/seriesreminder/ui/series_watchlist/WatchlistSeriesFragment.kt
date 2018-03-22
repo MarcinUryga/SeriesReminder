@@ -37,12 +37,12 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
     super.onViewCreated(view, savedInstanceState)
     seriesRecyclerView.layoutManager = LinearLayoutManager(context)
     seriesRecyclerView.adapter = subscribedSeriesAdapter
+    presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
+    presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
   }
 
   override fun showSeries(series: MutableList<SubscribedSerieViewModel>) {
     subscribedSeriesAdapter.createSubscribeSeriesList(series)
-    presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
-    presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
   }
 
   override fun removeFromRecyclerView(serieId: Int) {
@@ -51,8 +51,6 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
 
   override fun starSerieDetailsActivity(serieIdParams: SerieIdParams) {
     startActivity(SerieDetailsActivity.newIntent(context, serieIdParams))
-    presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
-    presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
   }
 
   override fun getAdapterItemCount() = subscribedSeriesAdapter.itemCount

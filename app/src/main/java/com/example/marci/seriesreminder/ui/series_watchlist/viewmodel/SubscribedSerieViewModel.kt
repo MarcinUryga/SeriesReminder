@@ -1,6 +1,7 @@
 package com.example.marci.seriesreminder.ui.series_watchlist.viewmodel
 
 import com.example.marci.seriesreminder.model.pojo.seasons.Episode
+import com.example.marci.seriesreminder.utils.stringToJodaTime
 import org.joda.time.DateTime
 import org.joda.time.Days
 
@@ -19,23 +20,15 @@ data class SubscribedSerieViewModel(
     val episodes: List<Episode>
 ) {
 
-  fun getNextEpisodeDate(): String {
-    val nextEpisodeDateString = this.episodes.first { airDateToJodaTime(it.airDate.let { it!! }) >= DateTime.now() }.airDate.let { it!! }
-    return when (Days.daysBetween(airDateToJodaTime(nextEpisodeDateString).toLocalDate(), DateTime.now().toLocalDate())) {
+  fun getNexEpisodeDate(): String = this.episodes.first { it.airDate.let { it!! }.stringToJodaTime() >= DateTime.now() }.airDate.let { it!! }
+
+
+  fun getNextEpisodeDateString(): String {
+    return when (Days.daysBetween(getNexEpisodeDate().stringToJodaTime().toLocalDate(), DateTime.now().toLocalDate())) {
       Days.ZERO -> return "today"
       Days.ONE -> return "tomorrow"
       Days.TWO -> return "after tomorrow"
-      else -> nextEpisodeDateString
+      else -> getNexEpisodeDate()
     }
-  }
-
-  private fun airDateToJodaTime(airDate: String): DateTime {
-    val dateFields = airDate.split("-")
-    return DateTime(
-        dateFields[0].toInt(),
-        dateFields[1].toInt(),
-        dateFields[2].toInt(),
-        23,
-        59)
   }
 }

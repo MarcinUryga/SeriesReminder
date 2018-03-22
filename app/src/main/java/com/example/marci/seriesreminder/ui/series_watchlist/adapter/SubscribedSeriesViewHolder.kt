@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.marci.seriesreminder.R
-import com.example.marci.seriesreminder.network.HttpConstants
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_subscribed_serie.view.*
@@ -25,7 +24,7 @@ class SubscribedSeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
       voteCountTextView.text = context.getString(R.string.vote_count, serie.voteCount)
       originCountryTextView.text = context.getString(R.string.country, serie.originCountry.toString())
       if (serie.episodes.isNotEmpty()) {
-        nextEpisodeDateTextView.text = context.getString(R.string.next_episode, serie.getNextEpisodeDate())
+        nextEpisodeDateTextView.text = context.getString(R.string.next_episode, serie.getNextEpisodeDateString())
       }
     }
   }

@@ -40,7 +40,7 @@ class SeriesAlarmReceiver : BroadcastReceiver(), SeriesAlarmContract.Receiver {
     val mNotifyBuilder = NotificationCompat.Builder(context, "seriesReminder")
         .setSmallIcon(R.drawable.ic_tv_black_24dp)
         .setContentTitle(it.title)
-        .setContentText(context.getString(R.string.next_episode, it.getNextEpisodeDate()))
+        .setContentText(context.getString(R.string.next_episode, it.getNextEpisodeDateString()))
         .setContentIntent(pendingIntent)
         .setAutoCancel(true)
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
