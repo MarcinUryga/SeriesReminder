@@ -41,7 +41,18 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
     presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())
   }
 
-  override fun showSeries(series: MutableList<SubscribedSerieViewModel>) {
+  override fun showProgressBar() {
+    progressBar.visibility = View.VISIBLE
+    seriesRecyclerView.visibility = View.INVISIBLE
+  }
+
+  override fun hideProgressBar() {
+    progressBar.visibility = View.INVISIBLE
+    seriesRecyclerView.visibility = View.VISIBLE
+  }
+
+  override fun refreshSeriesView(series: MutableList<SubscribedSerieViewModel>) {
+    subscribedSeriesAdapter.clearSeries()
     subscribedSeriesAdapter.createSubscribeSeriesList(series)
   }
 

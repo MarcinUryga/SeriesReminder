@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_series_list.*
 class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(), OverviewSeriesContract.View {
 
   val serieAdapter: SeriesAdapter = SeriesAdapter()
-  //  lateinit var serieAdapter: SeriesAdapter
   val linearLayoutManager = LinearLayoutManager(context)
 
   var onScrollListener: RecyclerView.OnScrollListener? = null

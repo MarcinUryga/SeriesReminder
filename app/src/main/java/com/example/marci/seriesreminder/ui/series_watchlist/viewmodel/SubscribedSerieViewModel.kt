@@ -1,6 +1,7 @@
 package com.example.marci.seriesreminder.ui.series_watchlist.viewmodel
 
 import com.example.marci.seriesreminder.model.pojo.seasons.Episode
+import com.example.marci.seriesreminder.utils.dateTimeToShortDate
 import com.example.marci.seriesreminder.utils.dateTimeToString
 import com.example.marci.seriesreminder.utils.stringToJodaTime
 import org.joda.time.DateTime
@@ -33,8 +34,7 @@ data class SubscribedSerieViewModel(
   }
 
   private fun isAirDateBiggerOrEqualToday(it: Episode) =
-      it.airDate.let { it!! }.stringToJodaTime() >= DateTime.now()
-
+      it.airDate.let { it!! }.stringToJodaTime() >= DateTime.now().dateTimeToShortDate()
 
   fun getNextEpisodeDateString(): String {
     val nextEpisodeDateMilis = getNextEpisodeDateInMilis()

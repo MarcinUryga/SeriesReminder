@@ -20,6 +20,10 @@ class SubscribedSeriesAdapter : RecyclerView.Adapter<SubscribedSeriesViewHolder>
     notifyDataSetChanged()
   }
 
+  fun clearSeries() {
+    subscribedSeries.clear()
+  }
+
   fun removeSerie(id: Int) {
     val iterator = subscribedSeries.iterator()
     var index = 0

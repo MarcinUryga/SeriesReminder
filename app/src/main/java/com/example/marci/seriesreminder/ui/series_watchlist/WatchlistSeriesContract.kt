@@ -13,7 +13,7 @@ interface WatchlistSeriesContract {
 
   interface View : MvpView {
 
-    fun showSeries(series: MutableList<SubscribedSerieViewModel>)
+    fun refreshSeriesView(series: MutableList<SubscribedSerieViewModel>)
 
     fun showNoSeriesView()
 
@@ -22,6 +22,10 @@ interface WatchlistSeriesContract {
     fun starSerieDetailsActivity(serieIdParams: SerieIdParams)
 
     fun removeFromRecyclerView(serieId: Int)
+
+    fun showProgressBar()
+
+    fun hideProgressBar()
   }
 
   interface Presenter : MvpPresenter {

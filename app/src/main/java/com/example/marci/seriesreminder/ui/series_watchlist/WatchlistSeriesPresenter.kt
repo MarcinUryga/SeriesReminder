@@ -25,11 +25,13 @@ class WatchlistSeriesPresenter @Inject constructor(
     val disposable = getSubscribedSeriesUseCase.get(subscribedSeriesStorage.getSubscribedSeriesIds())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showProgressBar() }
+        .doFinally { view.hideProgressBar() }
         .subscribe { series ->
           if (series.isEmpty()) {
             view.showNoSeriesView()
           } else {
-            view.showSeries(series as MutableList<SubscribedSerieViewModel>)
+            view.refreshSeriesView(series as MutableList<SubscribedSerieViewModel>)
           }
         }
     disposables?.addAll(disposable)

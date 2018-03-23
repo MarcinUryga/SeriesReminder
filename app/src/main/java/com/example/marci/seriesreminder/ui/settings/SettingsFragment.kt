@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseFragment
 import com.example.marci.seriesreminder.receiver.SeriesAlarmReceiver
+import com.example.marci.seriesreminder.utils.stringFormatToTwoDigitsTime
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -88,6 +89,6 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
   }
 
   override fun showRemindTime(reminderTime: String) {
-    timeTextView.text = reminderTime
+    timeTextView.text = reminderTime.stringFormatToTwoDigitsTime()
   }
 }

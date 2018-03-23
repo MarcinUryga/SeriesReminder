@@ -12,7 +12,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(modules = arrayOf(
     AndroidSupportInjectionModule::class,
     ApplicationModule::class,
-    InjectorsModule::class
+    InjectorsModule::class,
+    PicassoModule::class
 ))
 interface ApplicationComponent : AndroidInjector<SeriesReminderApplication> {
 
