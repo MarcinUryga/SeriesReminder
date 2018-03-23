@@ -4,7 +4,9 @@ import com.example.marci.seriesreminder.model.pojo.seasons.Episode
 import com.example.marci.seriesreminder.model.realm.SerieRealm
 import com.example.marci.seriesreminder.repositories.SeriesRepository
 import com.example.marci.seriesreminder.ui.series_watchlist.viewmodel.SubscribedSerieViewModel
+import com.example.marci.seriesreminder.utils.stringToJodaTime
 import io.reactivex.Single
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 /**
@@ -42,7 +44,7 @@ class GetSubscribedSeriesUseCase @Inject constructor(
                   )
                 }?.toList() ?: emptyList()
             )
-          }.toMutableList()
+          }.toMutableList().sortedWith(compareBy(nullsLast<Long>()) { it.getNextEpisodeDateInMilis() })
         } else {
           return@get emptyList<SubscribedSerieViewModel>()
         }

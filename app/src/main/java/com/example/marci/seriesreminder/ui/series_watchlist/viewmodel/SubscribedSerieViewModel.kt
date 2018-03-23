@@ -1,6 +1,7 @@
 package com.example.marci.seriesreminder.ui.series_watchlist.viewmodel
 
 import com.example.marci.seriesreminder.model.pojo.seasons.Episode
+import com.example.marci.seriesreminder.utils.dateTimeToString
 import com.example.marci.seriesreminder.utils.stringToJodaTime
 import org.joda.time.DateTime
 import org.joda.time.Days
@@ -20,15 +21,32 @@ data class SubscribedSerieViewModel(
     val episodes: List<Episode>
 ) {
 
-  fun getNexEpisodeDate(): String = this.episodes.first { it.airDate.let { it!! }.stringToJodaTime() >= DateTime.now() }.airDate.let { it!! }
+  fun getNextEpisodeDateInMilis(): Long? {
+    return try {
+      this.episodes.first {
+        isAirDateBiggerOrEqualToday(it)
+      }.airDate.let { it!! }
+          .stringToJodaTime().millis
+    } catch (e: NoSuchElementException) {
+      null
+    }
+  }
+
+  private fun isAirDateBiggerOrEqualToday(it: Episode) =
+      it.airDate.let { it!! }.stringToJodaTime() >= DateTime.now()
 
 
   fun getNextEpisodeDateString(): String {
-    return when (Days.daysBetween(getNexEpisodeDate().stringToJodaTime().toLocalDate(), DateTime.now().toLocalDate())) {
-      Days.ZERO -> return "today"
-      Days.ONE -> return "tomorrow"
-      Days.TWO -> return "after tomorrow"
-      else -> getNexEpisodeDate()
+    val nextEpisodeDateMilis = getNextEpisodeDateInMilis()
+    if (nextEpisodeDateMilis == null) {
+      return "Can't find next episode date"
+    } else {
+      return when (Days.daysBetween(DateTime(getNextEpisodeDateInMilis()).toLocalDate(), DateTime.now().toLocalDate())) {
+        Days.ZERO -> return "today"
+        Days.ONE -> return "tomorrow"
+        Days.TWO -> return "after tomorrow"
+        else -> DateTime(getNextEpisodeDateInMilis()).dateTimeToString()
+      }
     }
   }
 }

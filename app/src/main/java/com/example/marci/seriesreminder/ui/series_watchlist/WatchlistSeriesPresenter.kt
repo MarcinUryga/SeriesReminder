@@ -20,8 +20,8 @@ class WatchlistSeriesPresenter @Inject constructor(
     private val subscribedSeriesStorage: SubscribedSeriesStorage
 ) : BasePresenter<WatchlistSeriesContract.View>(), WatchlistSeriesContract.Presenter {
 
-  override fun onViewCreated() {
-    super.onViewCreated()
+  override fun resume() {
+    super.resume()
     val disposable = getSubscribedSeriesUseCase.get(subscribedSeriesStorage.getSubscribedSeriesIds())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

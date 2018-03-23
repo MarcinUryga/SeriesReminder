@@ -64,10 +64,10 @@ class SeriesRepository @Inject constructor(
     return getSerieDetails(serieId).flatMap { details: SerieDetails ->
       serieDetailsAPI.getSeason(serieId, details.seasons?.let {
         var lastSeason: Int = it.last().seasonNumber.let { it!! }
-        if (++lastSeason != details.numberOfSeasons) {
-          return@let it.last().seasonNumber.let { it!! }
-        } else {
-          return@let details.numberOfSeasons
+        when {
+          lastSeason < it.size && it[lastSeason].episodeCount == 0 -> return@let lastSeason - 1
+          ++lastSeason != details.numberOfSeasons -> return@let it.last().seasonNumber.let { it!! }
+          else -> return@let details.numberOfSeasons
         }
       }.let { it!! })
     }
