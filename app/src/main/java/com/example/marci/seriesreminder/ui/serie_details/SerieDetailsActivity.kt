@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseActivity
-import com.example.marci.seriesreminder.ui.menu_navigation.MainNavigationActivity
 import com.example.marci.seriesreminder.ui.serie_details.adapter.EpisodesAdapter
 import com.example.marci.seriesreminder.ui.serie_details.viewmodel.SerieDetailsViewModel
 import com.squareup.picasso.Picasso
@@ -56,7 +55,7 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
   }
 
   override fun startMainActivity() {
-    startActivity(MainNavigationActivity.newIntent(baseContext))
+    super.onBackPressed()
   }
 
   companion object {

@@ -8,7 +8,10 @@ import com.example.marci.seriesreminder.mvp.MvpView
  */
 interface MainNavigationContract {
 
-  interface View : MvpView
+  interface View : MvpView {
+
+    fun getCurrentFragment(menuNavId: Int)
+  }
 
   interface Presenter : MvpPresenter
 }

@@ -14,11 +14,11 @@ class UpdateSerieDetailsUseCase @Inject constructor(
     private val seriesRepository: SeriesRepository
 ) {
 /*
-  fun update(serieId: Int): Completable {
+  fun update(menuItem: Int): Completable {
     return Single.fromCallable {
       seriesRepository.let {
         if (networkConnection.isOnline()) {
-          it.saveSerieDetails(serieId)
+          it.saveSerieDetails(menuItem)
         }
       }
     }.toCompletable()

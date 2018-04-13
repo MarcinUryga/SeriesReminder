@@ -30,10 +30,12 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     setSupportActionBar(toolbar)
     drawerToggle = setupDrawerToggle()
     drawerLayout.addDrawerListener(drawerToggle)
-    setupNavigationDrawer()
     switchFragment(OverviewSeriesFragment())
     headerView = navigationView.getHeaderView(0)
+    switchFragment(OverviewSeriesFragment())
+    navigateWithMenuNav()
   }
+
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
     super.onPostCreate(savedInstanceState)
@@ -55,7 +57,7 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     return ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close)
   }
 
-  private fun setupNavigationDrawer() {
+  private fun navigateWithMenuNav() {
     navigationView.setNavigationItemSelectedListener { menuItem ->
       when (menuItem.itemId) {
         R.id.nav_series_overview -> switchFragment(OverviewSeriesFragment())
@@ -78,9 +80,18 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
         .commit()
   }
 
+  override fun getCurrentFragment(menuNavId: Int) {
+    when (menuNavId) {
+      MenuItemEnum.OVERVIEW.itemId -> switchFragment(OverviewSeriesFragment())
+      MenuItemEnum.WATCHLIST.itemId -> switchFragment(WatchlistSeriesFragment())
+      MenuItemEnum.SETTINGS.itemId -> switchFragment(SettingsFragment())
+      else -> switchFragment(OverviewSeriesFragment())
+    }
+  }
+
   companion object {
-    fun newIntent(context: Context): Intent {
-      return Intent(context, MainNavigationActivity::class.java)
+    fun newIntent(context: Context, menuItemParams: MenuItemParams): Intent {
+      return Intent(context, MainNavigationActivity::class.java).putExtras(menuItemParams.data)
     }
   }
 }
