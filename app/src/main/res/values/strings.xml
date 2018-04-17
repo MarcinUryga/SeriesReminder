@@ -19,4 +19,8 @@
     <string name="daily_reminder_time">Daily reminder time:</string>
     <string name="series_reminders">Series Reminders</string>
     <string name="daily_reminds">Daily reminds</string>
+
+    <string name="imageTransition">imageTransition</string>
+    <string name="titleTransition">titleTransition</string>
+    <string name="airDateTransition">airDateTransition</string>
 </resources>

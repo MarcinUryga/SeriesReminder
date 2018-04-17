@@ -1,0 +1,17 @@
+<!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:alpha="0.6"
+    android:viewportHeight="612"
+    android:viewportWidth="583">
+    <group
+        android:pivotX="306"
+        android:pivotY="291"
+        android:scaleX="0.5"
+        android:scaleY="0.5">
+        <path
+            android:fillColor="#000"
+            android:pathData="m116.6 259c-1.1 -9.3 -4.4 -18 -9.4 -25.5l448.1 -149.4l-23.5 -70.4c-3.4 -10.2 -14.5 -15.7 -24.7 -12.3l-487.5 162.5c-10.2 3.4 -15.8 14.5 -12.3 24.7l11.5 34.5c-11.5 10.7 -18.7 25.9 -18.7 42.8c0 21.9 12.1 41 30 51v275.6c0 10.8 8.8 19.5 19.5 19.5h513.9c10.8 0 19.5 -8.7 19.5 -19.5v-333.5h-466.4zm285.6 -199.7 59.3 -19.8 -14.3 57.6 -59.3 19.8 14.3 -57.6zm-146.6 48.9 59.3 -19.8 -14.3 57.6 -59.3 19.8 14.3 -57.6zm-197.1 187.5c-16.4 0 -29.8 -13.3 -29.8 -29.8c0 -16.4 13.4 -29.8 29.8 -29.8c16.4 0 29.8 13.3 29.8 29.8c0 16.4 -13.4 29.8 -29.8 29.8zm50.5 -138.6 59.3 -19.8 -14.3 57.6 -59.3 19.8 14.3 -57.6zm58.3 167.8h-62.6l31.8 -50.1h62.6l-31.8 50.1zm123.8 -50.1h62.6l-31.8 50.1h-62.6l31.8 -50.1zm-15.4 242.3v-132.3l105.5 66.1l-105.5 66.1zm200.6 -192.2h-62.6l31.8 -50.1h62.6l-31.8 50.1z" />
+    </group>
+</vector>

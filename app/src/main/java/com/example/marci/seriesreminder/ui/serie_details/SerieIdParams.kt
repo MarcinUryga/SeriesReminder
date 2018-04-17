@@ -18,6 +18,6 @@ class SerieIdParams(bundle: Bundle? = Bundle()) {
   }
 
   companion object {
-    const val SERIE_ID: String = "serieId"
+    const val SERIE_ID: String = "episodeId"
   }
 }

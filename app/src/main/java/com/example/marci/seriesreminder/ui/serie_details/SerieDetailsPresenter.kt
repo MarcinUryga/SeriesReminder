@@ -3,6 +3,8 @@ package com.example.marci.seriesreminder.ui.serie_details
 import com.example.marci.seriesreminder.di.ScreenScope
 import com.example.marci.seriesreminder.mvp.BasePresenter
 import com.example.marci.seriesreminder.ui.common.SubscribedSeriesStorage
+import com.example.marci.seriesreminder.ui.serie_details.adapter.ClickedEpisode
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,8 +21,8 @@ class SerieDetailsPresenter @Inject constructor(
 
   private lateinit var floatingActionButtonState: FloatingActionButtonState
 
-  override fun onViewCreated() {
-    super.onViewCreated()
+  override fun resume() {
+    super.resume()
     val disposable = getSerieDetailsUseCase.updateAndGet(serieIdParams.serieId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -49,5 +51,12 @@ class SerieDetailsPresenter @Inject constructor(
 
   override fun handleOnBackIconClicked() {
     view.startMainActivity()
+  }
+
+  override fun handleClickedEpisode(clickedEpisode: Observable<ClickedEpisode>) {
+    val disposable = clickedEpisode.subscribe { clickedEpisode ->
+      view.startEpisodeDetails(clickedEpisode)
+    }
+    disposables?.add(disposable)
   }
 }

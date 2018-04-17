@@ -22,7 +22,7 @@ class PicassoModule {
   ): Picasso {
     return Picasso.Builder(app)
         .downloader(OkHttp3Downloader(app, CACHE_SIZE))
-        .indicatorsEnabled(true)
+//        .indicatorsEnabled(true)
         .loggingEnabled(true)
         .build()
   }

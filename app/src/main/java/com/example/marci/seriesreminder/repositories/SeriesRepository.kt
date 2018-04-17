@@ -135,7 +135,7 @@ class SeriesRepository @Inject constructor(
         airDate = episode.airDate ?: ""
         episodeNumber = episode.episodeNumber.let { it!! }
         seasonNumber = episode.seasonNumber.let { it!! }
-        stillPath = episode.stillPath.toString()
+        stillPath = HttpConstants.TMDP_POSTER_PATH + episode.stillPath.toString()
         voteAverage = episode.voteAverage.let { it!! }
         voteCount = episode.voteCount.let { it!! }
       }

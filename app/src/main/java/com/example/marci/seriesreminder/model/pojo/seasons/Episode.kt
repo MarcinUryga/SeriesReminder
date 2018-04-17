@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Episode(
-    var id: Int? = null,
+    var id: Int,
     var name: String? = null,
     var crew: List<Crew>? = null,
     var overview: String? = null,
@@ -25,7 +25,7 @@ data class Episode(
     var seasonNumber: Int? = null,
     @SerializedName("still_path")
     @Expose
-    var stillPath: Any? = null,
+    var stillPath: String? = null,
     @SerializedName("vote_average")
     @Expose
     var voteAverage: Double? = null,

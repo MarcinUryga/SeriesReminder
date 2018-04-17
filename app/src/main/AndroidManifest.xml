@@ -22,10 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.serie_details.SerieDetailsActivity" />
 
-        <receiver
-            android:name=".receiver.SeriesAlarmReceiver">
+        <activity android:name=".ui.episode.EpisodeActivity" />
+
+        <receiver android:name=".receiver.SeriesAlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
