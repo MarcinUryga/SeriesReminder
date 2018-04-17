@@ -30,6 +30,10 @@ interface OverviewSeriesContract {
     fun getSeriesListSize(): Int
 
     fun removeSerieFromRecyclerView(serieId: Int)
+
+    fun showCenterProgressBar()
+
+    fun hideCenterProgressBar()
   }
 
   interface Presenter : MvpPresenter {

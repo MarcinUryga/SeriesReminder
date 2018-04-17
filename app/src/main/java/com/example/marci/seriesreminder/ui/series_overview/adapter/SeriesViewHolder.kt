@@ -8,6 +8,7 @@ import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.network.HttpConstants
 import com.example.marci.seriesreminder.ui.common.BaseViewHolder
 import com.example.marci.seriesreminder.ui.series_overview.viewmodel.SerieViewModel
+import com.example.marci.seriesreminder.utils.RoundedCornersTransform
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_serie.view.*
 

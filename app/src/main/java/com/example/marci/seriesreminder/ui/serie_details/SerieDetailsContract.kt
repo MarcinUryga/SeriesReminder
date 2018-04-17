@@ -1,6 +1,5 @@
 package com.example.marci.seriesreminder.ui.serie_details
 
-import com.example.marci.seriesreminder.model.pojo.seasons.Episode
 import com.example.marci.seriesreminder.mvp.MvpPresenter
 import com.example.marci.seriesreminder.mvp.MvpView
 import com.example.marci.seriesreminder.ui.serie_details.adapter.ClickedEpisode
@@ -21,6 +20,10 @@ interface SerieDetailsContract {
     fun startMainActivity()
 
     fun startEpisodeDetails(clickedEpisode: ClickedEpisode)
+
+    fun showProgressBar()
+
+    fun hideProgressBar()
   }
 
   interface Presenter : MvpPresenter {

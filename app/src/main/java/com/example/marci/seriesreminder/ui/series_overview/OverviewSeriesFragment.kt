@@ -56,6 +56,14 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
     serieAdapter.clear()
   }
 
+  override fun showCenterProgressBar() {
+    progressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideCenterProgressBar() {
+    progressBar.visibility = View.GONE
+  }
+
   override fun addProgressBar() {
     serieAdapter.addProgressBar()
   }

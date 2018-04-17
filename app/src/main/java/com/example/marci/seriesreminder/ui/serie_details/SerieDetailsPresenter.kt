@@ -21,11 +21,13 @@ class SerieDetailsPresenter @Inject constructor(
 
   private lateinit var floatingActionButtonState: FloatingActionButtonState
 
-  override fun resume() {
-    super.resume()
+  override fun onViewCreated() {
+    super.onViewCreated()
     val disposable = getSerieDetailsUseCase.updateAndGet(serieIdParams.serieId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { view.showProgressBar() }
+        .doFinally { view.hideProgressBar() }
         .subscribe({ serieDetails ->
           view.showSerieDetails(serieDetails)
           updateActionButtonState(serieDetails.id)

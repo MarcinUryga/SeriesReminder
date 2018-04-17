@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.mvp.BaseActivity
 import com.example.marci.seriesreminder.ui.episode.EpisodeActivity
@@ -31,6 +32,16 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
     setContentView(R.layout.activity_serie_details)
     episodesRecyclerView.layoutManager = GridLayoutManager(this, 2)
     presenter.handleClickedEpisode(episodesAdapter.getClickedEpisode())
+  }
+
+  override fun showProgressBar() {
+    progressBar.visibility = View.VISIBLE
+    contentSerieDetails.visibility = View.INVISIBLE
+  }
+
+  override fun hideProgressBar() {
+    progressBar.visibility = View.INVISIBLE
+    contentSerieDetails.visibility = View.VISIBLE
   }
 
   override fun showSerieDetails(serieDetails: SerieDetailsViewModel) {

@@ -9,6 +9,7 @@ import com.example.marci.seriesreminder.R
 import com.example.marci.seriesreminder.model.pojo.seasons.Episode
 import com.example.marci.seriesreminder.mvp.BaseActivity
 import com.example.marci.seriesreminder.utils.RoundedCornersTransform
+import com.example.marci.seriesreminder.utils.convertDpToPixel
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.end_item_episode.*
@@ -29,8 +30,10 @@ class EpisodeActivity : BaseActivity<EpisodeContract.Presenter>(), EpisodeContra
   @SuppressLint("SetTextI18n")
   override fun showEpisode(episode: Episode) {
     Picasso.with(this).load(episode.stillPath)
-        .centerCrop().resize(convertDpToPixel(150f, this).toInt(), convertDpToPixel(150f, this).toInt())
-        .transform(RoundedCornersTransform()).into(episodeImageView)
+        .centerCrop().resize(
+        IMAGE_WIDTH.convertDpToPixel(this).toInt(),
+        IMAGE_HEIGHT.convertDpToPixel(this).toInt()
+    ).transform(RoundedCornersTransform()).into(episodeImageView)
     episodeTitle.text = "${episode.episodeNumber}. ${episode.name}"
     airDate.text = episode.airDate
     episodeOverview.text = episode.overview
@@ -43,6 +46,9 @@ class EpisodeActivity : BaseActivity<EpisodeContract.Presenter>(), EpisodeContra
   }
 
   companion object {
+    val IMAGE_WIDTH = 200f
+    val IMAGE_HEIGHT = 200f
+
     fun newIntent(context: Context, episodeIdParam: EpisodeIdParam): Intent {
       return Intent(context, EpisodeActivity::class.java).putExtras(episodeIdParam.data)
     }

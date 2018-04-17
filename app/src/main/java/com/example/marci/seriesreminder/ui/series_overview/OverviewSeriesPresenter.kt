@@ -23,11 +23,13 @@ class OverviewSeriesPresenter @Inject constructor(
 
   private var currentSeriesPage = 1
   private var loading = false
+  private var isFirstLoading = true
   private var totalPages = 0
 
   override fun resume() {
     super.resume()
     currentSeriesPage = 1
+    isFirstLoading = true
     view.clearSeriesAdapter()
     downloadNewSeries()
   }
@@ -72,14 +74,22 @@ class OverviewSeriesPresenter @Inject constructor(
   }
 
   private fun doAferLoadingCurrentPage() {
+    if (isFirstLoading) {
+      isFirstLoading = false
+      view.hideCenterProgressBar()
+    }
     loading = false
     view.removeProgressBar()
     currentSeriesPage++
   }
 
   private fun doOnLoadingSeriesFromCurrentPage() {
-    loading = true
-    view.addProgressBar()
+    if (isFirstLoading) {
+      view.showCenterProgressBar()
+    } else {
+      loading = true
+      view.addProgressBar()
+    }
   }
 
   override fun handleChosenSerie(clickedSerie: Observable<Int>) {
