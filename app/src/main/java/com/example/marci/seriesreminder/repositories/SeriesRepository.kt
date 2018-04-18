@@ -129,7 +129,7 @@ class SeriesRepository @Inject constructor(
   private fun transformEpisodesToRealm(episodes: List<Episode>): RealmList<EpisodeRealm> {
     return episodes.map { episode ->
       EpisodeRealm().apply {
-        id = episode.id.let { it!! }
+        id = episode.id.let { it }
         name = episode.name.let { it!! }
         overview = episode.overview.let { it!! }
         airDate = episode.airDate ?: ""
