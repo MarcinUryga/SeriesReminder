@@ -8,7 +8,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha02'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha11'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.realm:realm-gradle-plugin:4.3.3"
         // NOTE: Do not place your application dependencies here; they belong
@@ -29,6 +29,7 @@ allprojects {
 ext {
     android_support_version = "26.1.0"
     recyclerview_version = "26.1.0"
+    android_constraint_layout = "1.1.0"
     timber_version = "4.6.1"
     dagger_version = "2.12"
     okhttp_version = "3.8.1"

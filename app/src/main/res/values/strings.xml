@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">SeriesReminder</string>
-    <string name="fragment_overview_series">Overview</string>
-    <string name="fragment_watchlist_series">Watchlist</string>
+
     <string name="series">Series</string>
     <string name="overview">Overview</string>
     <string name="watchlist">Watchlist</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
-    <string name="seasnons">Seasnons: %d</string>
+    <string name="seasons">Seasons: %d</string>
     <string name="country">country: %s</string>
     <string name="vote_count">vote count: %d</string>
     <string name="episodes_in_this_season">Episodes in this season</string>
@@ -15,7 +14,6 @@
     <string name="no_favorites_series">No subscriptions</string>
     <string name="settings">Settings</string>
     <string name="others">Others</string>
-    <string name="set_time_for_daily_reminder">Set time for daily reminder</string>
     <string name="daily_reminder_time">Daily reminder time:</string>
     <string name="series_reminders">Series Reminders</string>
     <string name="daily_reminds">Daily reminds</string>
@@ -23,4 +21,11 @@
     <string name="imageTransition">imageTransition</string>
     <string name="titleTransition">titleTransition</string>
     <string name="airDateTransition">airDateTransition</string>
+    <string name="image_of_serie">image of serie</string>
+    <string name="icon_of_average">icon of average</string>
+    <string name="image_of_episode">image of episode</string>
+    <string name="no_subscriptions_icon">no subscriptions icon</string>
+    <string name="add_serie_image">add serie image</string>
+    <string name="icon_of_unsubscribe">icon of unsubscribe</string>
+    <string name="this_season_has_not_episodes_yet">This season has not episodes yet</string>
 </resources>
