@@ -2,9 +2,9 @@ package seriesreminder.ui.serieswatchlist.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import seriesreminder.ui.serieswatchlist.viewmodel.SubscribedSerieViewModel
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.item_subscribed_serie.view.*
+import kotlinx.android.synthetic.main.item_serie.view.*
+import seriesreminder.ui.serieswatchlist.viewmodel.SubscribedSerieViewModel
 
 /**
  ** Created by marci on 2018-02-23.
@@ -22,6 +22,7 @@ class SubscribedSeriesAdapter : RecyclerView.Adapter<SubscribedSeriesViewHolder>
 
   fun clearSeries() {
     subscribedSeries.clear()
+    notifyDataSetChanged()
   }
 
   fun removeSerie(id: Int) {
@@ -45,7 +46,7 @@ class SubscribedSeriesAdapter : RecyclerView.Adapter<SubscribedSeriesViewHolder>
     holder.itemView.setOnClickListener {
       clickedSeriePublishSubject.onNext(subscribedSeries[position].id)
     }
-    holder.itemView.unsubscribeButton.setOnClickListener {
+    holder.itemView.actionSubscriptionButton.setOnClickListener {
       subscriptionPublishSubject.onNext(subscribedSeries[position].id)
     }
   }

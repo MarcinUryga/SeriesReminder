@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.mu.marci.series_reminder.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_subscribed_serie.view.*
-import seriesreminder.network.HttpConstants
+import kotlinx.android.synthetic.main.item_serie.view.*
 import seriesreminder.ui.serieswatchlist.viewmodel.SubscribedSerieViewModel
 
 /**
@@ -27,7 +26,9 @@ class SubscribedSeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
           .into(serieImage)
       voteCountTextView.text = context.getString(R.string.vote_count, serie.voteCount)
       originCountryTextView.text = context.getString(R.string.country, serie.originCountry.toString())
+      actionSubscriptionButton.isSelected = serie.isSubscribed
       if (serie.episodes.isNotEmpty()) {
+        nextEpisodeInfoLayout.visibility = View.VISIBLE
         nextEpisodeDateTextView.text = context.getString(R.string.next_episode, serie.getNextEpisodeDateString())
       }
     }
@@ -35,7 +36,7 @@ class SubscribedSeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
   companion object {
     fun create(parent: ViewGroup): SubscribedSeriesViewHolder {
-      return SubscribedSeriesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_subscribed_serie, parent, false))
+      return SubscribedSeriesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_serie, parent, false))
     }
   }
 }

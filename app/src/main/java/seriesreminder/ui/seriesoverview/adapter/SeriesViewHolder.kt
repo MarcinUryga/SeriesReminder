@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.mu.marci.series_reminder.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_serie.view.*
-import seriesreminder.network.HttpConstants
 import seriesreminder.ui.common.BaseViewHolder
 import seriesreminder.ui.seriesoverview.viewmodel.SerieViewModel
 
@@ -27,11 +26,7 @@ class SeriesViewHolder(itemView: View) : BaseViewHolder(itemView) {
           .into(serieImage)
       voteCountTextView.text = context.getString(R.string.vote_count, serie.voteCount)
       originCountryTextView.text = context.getString(R.string.country, serie.originCountry.toString())
-      if (serie.isSubscribed) {
-        actionSubscriptionButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_remove_circle_black))
-      } else {
-        actionSubscriptionButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add_circle_black))
-      }
+      actionSubscriptionButton.isSelected = serie.isSubscribed
     }
   }
 

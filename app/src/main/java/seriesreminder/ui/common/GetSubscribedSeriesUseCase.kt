@@ -1,10 +1,10 @@
 package seriesreminder.ui.common
 
-import seriesreminder.ui.serieswatchlist.viewmodel.SubscribedSerieViewModel
 import io.reactivex.Single
 import seriesreminder.model.pojo.seasons.Episode
 import seriesreminder.model.realm.SerieRealm
 import seriesreminder.repositories.SeriesRepository
+import seriesreminder.ui.serieswatchlist.viewmodel.SubscribedSerieViewModel
 import javax.inject.Inject
 
 /**
@@ -19,7 +19,7 @@ class GetSubscribedSeriesUseCase @Inject constructor(
       seriesRepository.get(SerieRealm::class) {
         if (!ids.isEmpty()) {
           `in`("id", ids.toTypedArray()).findAll().map {
-            createSerieViewModel(it)
+            createSerieViewModel(it, ids)
           }.toMutableList().sortedWith(compareBy(nullsLast<Long>()) { it.getNextEpisodeDateInMillis() })
         } else {
           emptyList()
@@ -28,7 +28,7 @@ class GetSubscribedSeriesUseCase @Inject constructor(
     }
   }
 
-  private fun createSerieViewModel(it: SerieRealm): SubscribedSerieViewModel {
+  private fun createSerieViewModel(it: SerieRealm, ids: List<Int>): SubscribedSerieViewModel {
     return SubscribedSerieViewModel(
         id = it.id,
         title = it.name,
@@ -38,7 +38,8 @@ class GetSubscribedSeriesUseCase @Inject constructor(
         voteAverage = it.voteAverage,
         overview = it.overview,
         photoUrl = it.posterPath,
-        episodes = it.episodes?.map { episodeRealm ->
+        isSubscribed = ids.contains(it.id),
+        episodes = it.episodes.map { episodeRealm ->
           Episode(
               id = episodeRealm.id,
               name = episodeRealm.name,
@@ -50,7 +51,7 @@ class GetSubscribedSeriesUseCase @Inject constructor(
               voteAverage = episodeRealm.voteAverage,
               voteCount = episodeRealm.voteCount
           )
-        }?.toList() ?: emptyList()
+        }.toList()
     )
   }
 }

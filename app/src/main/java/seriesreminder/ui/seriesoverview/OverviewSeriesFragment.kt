@@ -10,12 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.mu.marci.series_reminder.R
-import seriesreminder.mvp.BaseFragment
-import seriesreminder.ui.seriesoverview.adapter.SeriesAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_series_list.*
+import seriesreminder.mvp.BaseFragment
 import seriesreminder.ui.seriedetails.SerieDetailsActivity
 import seriesreminder.ui.seriedetails.SerieIdParams
+import seriesreminder.ui.seriesoverview.adapter.SeriesAdapter
 import seriesreminder.ui.seriesoverview.viewmodel.SerieViewModel
 
 /**
@@ -24,8 +24,8 @@ import seriesreminder.ui.seriesoverview.viewmodel.SerieViewModel
 class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(), OverviewSeriesContract.View {
 
   private val serieAdapter: SeriesAdapter = SeriesAdapter()
-  val linearLayoutManager = LinearLayoutManager(context)
-
+  private val linearLayoutManager = LinearLayoutManager(context)
+  private var lastItemPosition = -1
   private var onScrollListener: RecyclerView.OnScrollListener? = null
 
   @SuppressLint("CheckResult")
@@ -38,10 +38,34 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
     return inflater.inflate(R.layout.fragment_series_list, container, false)
   }
 
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    lastItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
+    outState.putInt(LAST_ITEM_POSITION, lastItemPosition)
+  }
+
+  override fun onViewStateRestored(savedInstanceState: Bundle?) {
+    super.onViewStateRestored(savedInstanceState)
+    if (savedInstanceState != null) {
+      lastItemPosition = savedInstanceState.getInt(LAST_ITEM_POSITION)
+    }
+  }
+
+  override fun getLastRecyclerViewItemFromLastState() = lastItemPosition
+
+  override fun scrollRecyclerViewToItem(position: Int) {
+    seriesRecyclerView.scrollToPosition(position)
+  }
+
+  override fun cleanListFromSubscribedSeries(subscribedSeriesIds: List<Int>) {
+    serieAdapter.removeSeries(subscribedSeriesIds)
+  }
+
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     seriesRecyclerView.layoutManager = linearLayoutManager
     seriesRecyclerView.adapter = serieAdapter
+    presenter.handleSubscriptionSerie(serieAdapter.getClickedSubscription())
     presenter.handleChosenSerie(serieAdapter.getClickedSerie())
     onScrollListener = object : RecyclerView.OnScrollListener() {
       override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -54,7 +78,6 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
 
   override fun addSeries(series: List<SerieViewModel>) {
     serieAdapter.addSeries(series)
-    presenter.handleSubscriptionSerie(serieAdapter.getClickedSubscription())
   }
 
   override fun clearSeriesAdapter() {
@@ -96,5 +119,9 @@ class OverviewSeriesFragment : BaseFragment<OverviewSeriesContract.Presenter>(),
   override fun showSeries(series: List<SerieViewModel>) {
     /* serieAdapter = SeriesAdapter(series)
      seriesRecyclerView.adapter = serieAdapter*/
+  }
+
+  companion object {
+    val LAST_ITEM_POSITION = "lastItemPosition"
   }
 }

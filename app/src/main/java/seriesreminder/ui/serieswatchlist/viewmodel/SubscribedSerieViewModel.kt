@@ -19,7 +19,8 @@ data class SubscribedSerieViewModel(
     val voteAverage: Double,
     val overview: String,
     val photoUrl: String,
-    val episodes: List<Episode>
+    val episodes: List<Episode>,
+    val isSubscribed: Boolean
 ) {
 
   fun getNextEpisodeDateInMillis(): Long? {

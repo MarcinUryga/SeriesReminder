@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
@@ -59,7 +60,7 @@ class SerieDetailsActivity : BaseActivity<SerieDetailsContract.Presenter>(), Ser
     serieAverage.text = "${serieDetails.voteAverage}"
     serieOverview.text = serieDetails.overview
     presenter.handleEpisodesPart(serieDetails.episodes)
-    episodesAdapter.addEpisodes(serieDetails.episodes.let { it!! })
+    episodesAdapter.addEpisodes(serieDetails.episodes)
     episodesRecyclerView.adapter = episodesAdapter
     actionSerieButton.setOnClickListener {
       presenter.onActionButtonClicked(serieDetails.id)

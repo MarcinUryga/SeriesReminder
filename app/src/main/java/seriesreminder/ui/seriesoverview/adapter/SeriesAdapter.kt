@@ -9,8 +9,8 @@ import seriesreminder.ui.common.BaseViewHolder
 import seriesreminder.ui.seriesoverview.viewmodel.SerieViewModel
 
 /**
-** Created by marci on 2018-02-16.
-*/
+ ** Created by marci on 2018-02-16.
+ */
 class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
   private val series = mutableListOf<SerieViewModel?>()
   private val publishSubject = PublishSubject.create<Int>()
@@ -18,7 +18,6 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
   fun addSeries(series: List<SerieViewModel>) {
     this.series.addAll(series)
-    this.series.distinct()
     notifyDataSetChanged()
   }
 
@@ -81,6 +80,10 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
   }
 
+  fun removeSeries(subscribedSeriesIds: List<Int>) {
+    subscribedSeriesIds.forEach { removeSerie(it) }
+  }
+
   override fun getItemViewType(position: Int): Int {
     return if (series[position] == null) VIEW_PROGRESSBAR else VIEW_SERIE
   }
@@ -94,5 +97,6 @@ class SeriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
   companion object {
     private val VIEW_SERIE = 0
     private val VIEW_PROGRESSBAR = 1
+
   }
 }

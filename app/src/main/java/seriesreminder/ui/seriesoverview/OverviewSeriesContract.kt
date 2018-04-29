@@ -34,6 +34,12 @@ interface OverviewSeriesContract {
     fun showCenterProgressBar()
 
     fun hideCenterProgressBar()
+
+    fun getLastRecyclerViewItemFromLastState(): Int
+
+    fun scrollRecyclerViewToItem(position: Int)
+
+    fun cleanListFromSubscribedSeries(subscribedSeriesIds: List<Int>)
   }
 
   interface Presenter : MvpPresenter {

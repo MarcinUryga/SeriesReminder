@@ -28,6 +28,16 @@ class OverviewSeriesPresenter @Inject constructor(
 
   override fun resume() {
     super.resume()
+    val lastItemPosition = view.getLastRecyclerViewItemFromLastState()
+    if (lastItemPosition != -1) {
+      view.scrollRecyclerViewToItem(lastItemPosition + 1)
+      view.cleanListFromSubscribedSeries(subscribedSeriesStorage.getSubscribedSeriesIds())
+    } else {
+      prefetchSeries()
+    }
+  }
+
+  private fun prefetchSeries() {
     currentSeriesPage = 1
     isFirstLoading = true
     view.clearSeriesAdapter()
@@ -65,7 +75,7 @@ class OverviewSeriesPresenter @Inject constructor(
                   voteAverage = it.voteAverage!!,
                   overview = it.overview!!,
                   photoUrl = it.posterPath!!,
-                  isSubscribed = subscribedSeriesStorage.getSerie(it.id.toString()) == true
+                  isSubscribed = subscribedSeriesStorage.getSerie(it.id.toString()) ?: false
               )
             }.let { it!! })
           }
