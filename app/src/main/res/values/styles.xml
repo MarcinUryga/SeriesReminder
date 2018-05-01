@@ -12,6 +12,19 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
+    <style name="AppThemeLight" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
     </style>

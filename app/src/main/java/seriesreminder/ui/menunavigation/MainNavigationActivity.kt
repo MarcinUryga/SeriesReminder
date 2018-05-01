@@ -35,9 +35,8 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     switchFragment(OverviewSeriesFragment())
     headerView = navigationView.getHeaderView(0)
     switchFragment(OverviewSeriesFragment())
-    navigateWithMenuNav()
+    setUpNavigationViewListener()
   }
-
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
     super.onPostCreate(savedInstanceState)
@@ -55,21 +54,26 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
     } else super.onOptionsItemSelected(item)
   }
 
+  override fun navigateWithMenuNav(menuNavId: Int) {
+    val menuItem = navigationView.menu.findItem(menuNavId)
+    when (menuItem.itemId) {
+      R.id.nav_series_overview -> switchFragment(OverviewSeriesFragment())
+      R.id.nav_series_watchlist -> switchFragment(WatchlistSeriesFragment())
+      R.id.nav_settings -> switchFragment(SettingsFragment())
+      else -> throw Exception("Illegal fragment")
+    }
+    menuItem.isChecked = true
+    title = menuItem.title
+    drawerLayout.closeDrawers()
+  }
+
   private fun setupDrawerToggle(): ActionBarDrawerToggle {
     return ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close)
   }
 
-  private fun navigateWithMenuNav() {
+  private fun setUpNavigationViewListener() {
     navigationView.setNavigationItemSelectedListener { menuItem ->
-      when (menuItem.itemId) {
-        R.id.nav_series_overview -> switchFragment(OverviewSeriesFragment())
-        R.id.nav_series_watchlist -> switchFragment(WatchlistSeriesFragment())
-        R.id.nav_settings -> switchFragment(SettingsFragment())
-        else -> throw Exception("Illegal fragment")
-      }
-      menuItem.isChecked = true
-      title = menuItem.title
-      drawerLayout.closeDrawers()
+      navigateWithMenuNav(menuItem.itemId)
       true
     }
   }
@@ -80,15 +84,6 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
         .replace(R.id.navContainer, currentFragment)
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         .commit()
-  }
-
-  override fun getCurrentFragment(menuNavId: Int) {
-    when (menuNavId) {
-      MenuItemEnum.OVERVIEW.itemId -> switchFragment(OverviewSeriesFragment())
-      MenuItemEnum.WATCHLIST.itemId -> switchFragment(WatchlistSeriesFragment())
-      MenuItemEnum.SETTINGS.itemId -> switchFragment(SettingsFragment())
-      else -> switchFragment(OverviewSeriesFragment())
-    }
   }
 
   companion object {

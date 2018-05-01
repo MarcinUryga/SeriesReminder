@@ -9,4 +9,5 @@
     <color name="colorRed">#B61827</color>
     <color name="windowBackgroundColor">#212121</color>
     <color name="colorTextPrimary">@android:color/white</color>
+    <color name="colorTextPrimaryDark">@android:color/black</color>
 </resources>

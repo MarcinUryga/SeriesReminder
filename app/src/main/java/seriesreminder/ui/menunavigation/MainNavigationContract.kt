@@ -10,7 +10,7 @@ interface MainNavigationContract {
 
   interface View : MvpView {
 
-    fun getCurrentFragment(menuNavId: Int)
+    fun navigateWithMenuNav(menuNavId: Int = -1)
   }
 
   interface Presenter : MvpPresenter

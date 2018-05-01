@@ -14,7 +14,7 @@ class MainNavigationPresenter @Inject constructor(
 
   override fun onViewCreated() {
     super.onViewCreated()
-    view.getCurrentFragment(menuItemParams.menuItem)
+    view.navigateWithMenuNav(menuItemParams.menuItem)
   }
 
 }

@@ -1,12 +1,13 @@
 package seriesreminder.di
 
-import seriesreminder.ui.settings.SettingsModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import seriesreminder.receiver.SeriesAlarmModule
 import seriesreminder.receiver.SeriesAlarmReceiver
 import seriesreminder.ui.episode.EpisodeActivity
 import seriesreminder.ui.episode.EpisodeModule
+import seriesreminder.ui.launch.LaunchActivity
+import seriesreminder.ui.launch.LaunchModule
 import seriesreminder.ui.menunavigation.MainNavigationActivity
 import seriesreminder.ui.menunavigation.MainNavigationModule
 import seriesreminder.ui.seriedetails.SerieDetailsActivity
@@ -16,6 +17,7 @@ import seriesreminder.ui.seriesoverview.OverviewSeriesModule
 import seriesreminder.ui.serieswatchlist.WatchlistSeriesFragment
 import seriesreminder.ui.serieswatchlist.WatchlistSeriesModule
 import seriesreminder.ui.settings.SettingsFragment
+import seriesreminder.ui.settings.SettingsModule
 
 /**
  ** Created by marci on 2018-02-15.
@@ -47,6 +49,10 @@ abstract class InjectorsModule {
   @ScreenScope
   @ContributesAndroidInjector(modules = arrayOf(EpisodeModule::class))
   abstract fun episodeActivity(): EpisodeActivity
+
+  @ScreenScope
+  @ContributesAndroidInjector(modules = arrayOf(LaunchModule::class))
+  abstract fun launchActivity(): LaunchActivity
 
   @ContributesAndroidInjector(modules = arrayOf(SeriesAlarmModule::class))
   abstract fun seriesAlarmReceiver(): SeriesAlarmReceiver

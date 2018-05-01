@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SeriesReminder</string>
+    <string name="app_name">Series Reminder</string>
 
     <string name="series">Series</string>
     <string name="overview">Overview</string>
@@ -28,4 +28,6 @@
     <string name="add_serie_image">add serie image</string>
     <string name="icon_of_unsubscribe">icon of unsubscribe</string>
     <string name="this_season_has_not_episodes_yet">This season has not episodes yet</string>
+    <string name="reminder">Reminder</string>
+    <string name="series_n_reminder">Series \nReminder</string>
 </resources>
