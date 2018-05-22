@@ -3,7 +3,7 @@ package seriesreminder.ui.serieswatchlist
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +35,7 @@ class WatchlistSeriesFragment : BaseFragment<WatchlistSeriesContract.Presenter>(
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    seriesRecyclerView.layoutManager = LinearLayoutManager(context)
+    seriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
     seriesRecyclerView.adapter = subscribedSeriesAdapter
     presenter.handleClickedSerieUnsubscribe(subscribedSeriesAdapter.getSubscriptionPublishSubject())
     presenter.handleClickedSerie(subscribedSeriesAdapter.getClickedSeriePublishSubject())

@@ -62,7 +62,7 @@ class MainNavigationActivity : BaseActivity<MainNavigationContract.Presenter>(),
       R.id.nav_settings -> switchFragment(SettingsFragment())
       else -> throw Exception("Illegal fragment")
     }
-    menuItem.isChecked = true
+    navigationView.setCheckedItem(menuNavId)
     title = menuItem.title
     drawerLayout.closeDrawers()
   }

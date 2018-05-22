@@ -31,7 +31,7 @@
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_tv_black_24dp"
+            app:srcCompat="@drawable/ic_tv_white"
             android:contentDescription="@string/no_subscriptions_icon" />
 
         <TextView

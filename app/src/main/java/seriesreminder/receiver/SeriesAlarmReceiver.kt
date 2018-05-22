@@ -35,34 +35,16 @@ class SeriesAlarmReceiver : BroadcastReceiver(), SeriesAlarmContract.Receiver {
   override fun createNotification(it: SubscribedSerieViewModel) {
     val backIntent = MainNavigationActivity.newIntent(context, MenuItemParams(MenuItemEnum.WATCHLIST.itemId))
     backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
     val intent = SerieDetailsActivity.newIntent(context, SerieIdParams(it.id))
-
     val pendingIntent = PendingIntent.getActivities(context, it.id, arrayOf(backIntent, intent), PendingIntent.FLAG_ONE_SHOT)
-
     val mNotifyBuilder = NotificationCompat.Builder(context, "seriesReminder")
-        .setSmallIcon(R.drawable.ic_tv_black_24dp)
+        .setSmallIcon(R.drawable.ic_tv_white)
         .setContentTitle(it.title)
         .setContentText(context.getString(R.string.next_episode, it.getNextEpisodeDateString()))
         .setContentIntent(pendingIntent)
         .setAutoCancel(true)
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     notificationManager.notify(it.id, mNotifyBuilder.build())
-
-    /* val notificationIntent = SerieDetailsActivity.newIntent(context, MenuItemParams(it.id))
-     notificationIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-     val stackBuilder = TaskStackBuilder.create(context)
-     stackBuilder.addParentStack(MainNavigationActivity::class.java)
-     stackBuilder.addNextIntent(notificationIntent)
-     val pendingIntent = stackBuilder.getPendingIntent(it.id, PendingIntent.FLAG_UPDATE_CURRENT)
-     val mNotifyBuilder = NotificationCompat.Builder(context, "seriesReminder")
-         .setSmallIcon(R.drawable.ic_tv_black_24dp)
-         .setContentTitle(it.title)
-         .setContentText(context.getString(R.string.next_episode, it.getNextEpisodeDateString()))
-         .setContentIntent(pendingIntent)
-         .setAutoCancel(true)
-     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-     notificationManager.notify(it.id, mNotifyBuilder.build())*/
   }
 
   companion object {

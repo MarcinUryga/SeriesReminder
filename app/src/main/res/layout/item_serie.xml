@@ -88,34 +88,13 @@
                 <ImageButton
                     android:id="@+id/actionSubscriptionButton"
                     style="@style/SubscribeSerieButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:contentDescription="@string/add_serie_image"
-                    app:srcCompat="@drawable/ic_add_circle_white" />
+                    app:srcCompat="@drawable/ic_add_circle" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/nextEpisodeInfoLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/borderLine"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:contentDescription="@null"
-                    android:src="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/nextEpisodeDateTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/borderLine"
-                    android:layout_marginTop="10dp"
-                    tools:text="@string/next_episode" />
-            </RelativeLayout>
         </LinearLayout>
 
     </RelativeLayout>
