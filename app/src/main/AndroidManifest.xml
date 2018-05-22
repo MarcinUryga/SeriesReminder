@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.marci.seriesreminder">
+    package="com.mu.marci.series_reminder">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".SeriesReminderApplication"
+        android:name="seriesreminder.SeriesReminderApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.menu_navigation.MainNavigationActivity">
+        <activity
+            android:name="seriesreminder.ui.menunavigation.MainNavigationActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name="seriesreminder.ui.seriedetails.SerieDetailsActivity" />
+
+        <activity android:name="seriesreminder.ui.episode.EpisodeActivity" />
+
+        <activity
+            android:name="seriesreminder.ui.launch.LaunchActivity"
+            android:theme="@style/AppThemeLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.serie_details.SerieDetailsActivity" />
+
+        <receiver android:name="seriesreminder.receiver.SeriesAlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

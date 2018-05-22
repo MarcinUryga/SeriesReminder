@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:title="@string/series">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_series_overview"
-                    android:icon="@drawable/ic_tv_black_24dp"
+                    android:icon="@drawable/ic_tv_white"
                     android:title="@string/overview" />
                 <item
                     android:id="@+id/nav_series_watchlist"
@@ -16,4 +15,14 @@
         </menu>
     </item>
 
+    <item android:title="@string/others">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings_24dp"
+                    android:title="@string/settings" />
+            </group>
+        </menu>
+    </item>
 </menu>

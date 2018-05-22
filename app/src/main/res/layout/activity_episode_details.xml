@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+    <ImageView
+        android:id="@+id/episodeImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:scaleType="centerCrop"
+        android:transitionName="imageTransition"
+        android:contentDescription="@string/image_of_episode" />
+
+    <TextView
+        android:id="@+id/episodeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_toEndOf="@id/episodeImageView"
+        android:maxLines="3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:transitionName="titleTransition"
+        tools:text="1. Enemy Of States" />
+
+    <TextView
+        android:id="@+id/airDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/episodeTitle"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/episodeImageView"
+        android:transitionName="airDateTransition"
+        tools:text="Date: 2018-02-11" />
+
+    <TextView
+        android:id="@+id/episodeOverview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/episodeImageView"
+        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+
+</RelativeLayout>
